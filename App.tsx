@@ -1,12 +1,14 @@
 
-import React from 'react'
-import Navigation from '@navigation/Navigation'
+import React from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import Navigation from '@navigation/Navigation';
 const App = () => {
   return (
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Navigation />
+    </GestureHandlerRootView>
 
-   <Navigation/>
+  );
+};
 
-  )
-}
-
-export default App
+export default App;
