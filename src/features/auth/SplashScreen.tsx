@@ -6,7 +6,7 @@ import logo from '@assets/images/splash_logo.jpeg';
 import {screenHeight, screenWidth} from '../../utils/Scaling';
 import Geolocation from '@react-native-community/geolocation';
 import {useAuthStore} from '../../state/authStore';
-import {tokenStorage} from '../../state/storage';
+import {storage, tokenStorage} from '../../state/storage';
 import {jwtDecode} from 'jwt-decode';
 import {refresh_token, refetchUser} from '../../services/authService';
 import {resetAndNavigate} from '../../utils/NavigationUtils';
@@ -40,14 +40,15 @@ const SplashScreen = () => {
       }
       if (decodedAccessToken?.exp < currentTime) {
         try {
-          const newAccessToken = await refresh_token();
+          await refresh_token();
           await refetchUser(setUser);
         } catch (error) {
           Alert.alert('Error', 'Failed to refresh token');
           return false;
         }
       }
-      if (user?.role === 'customer') {
+      const updatedUser = useAuthStore.getState().user;
+      if (updatedUser?.role === 'customer') {
         resetAndNavigate('ProductDashboard');
       } else {
         resetAndNavigate('DeliveryDashboard');
@@ -57,6 +58,20 @@ const SplashScreen = () => {
     resetAndNavigate('CustomerLogin');
     return false;
   };
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      const storedUser = tokenStorage.getString('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser)); // Set the user in Zustand store
+        console.log('User loaded from storage:', JSON.parse(storedUser)); // Debugging log
+      } else {
+        console.log('No user found in storage');
+      }
+    };
+
+    loadUserData();
+  }, [setUser]);
 
   useEffect(() => {
     const fetchUserLocation = async () => {
@@ -91,3 +106,38 @@ const styles = StyleSheet.create({
 });
 
 export default SplashScreen;
+
+// SplashScreen Component
+// ├── Imports
+// │   ├── React Native Components
+// │   ├── Utilities (Colors, Scaling)
+// │   ├── Geolocation
+// │   ├── Zustand Store (useAuthStore)
+// │   ├── Token Storage
+// │   ├── JWT Decode
+// │   ├── Auth Service (refresh_token, refetchUser)
+// │   └── Navigation Utility (resetAndNavigate)
+// ├── Geolocation Configuration
+// │   ├── Request permissions
+// │   ├── Enable background updates
+// │   └── Set location provider
+// ├── Token Check Function
+// │   ├── Purpose: Validate tokens
+// │   ├── Functionality:
+// │   │   ├── Decode tokens
+// │   │   ├── Check expiration
+// │   │   ├── Refresh token if expired
+// │   │   └── Navigate based on user role
+// ├── Load User Data
+// │   ├── Purpose: Retrieve user data from storage
+// │   ├── Functionality:
+// │   │   ├── Set user in Zustand store
+// │   │   └── Log user loading status
+// ├── Fetch User Location
+// │   ├── Purpose: Request location permissions
+// │   ├── Functionality:
+// │   │   ├── Call tokenCheck
+// │   │   └── Handle errors
+// └── Rendering
+//     ├── Display splash logo
+//     └── Style container

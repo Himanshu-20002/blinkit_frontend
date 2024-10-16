@@ -25,3 +25,29 @@ export const useAuthStore = create<authStore>()(
     },
   ),
 );
+
+
+
+
+
+// ├── State Management
+// │   ├── User
+// │   │   ├── Type: Record<string, any> | null
+// │   │   ├── Purpose: Store authenticated user data
+// │   │   └── Methods:
+// │   │       ├── setUser(user)
+// │   │       └── logout()
+// │   ├── Current Order
+// │   │   ├── Type: Record<string, any> | null
+// │   │   ├── Purpose: Store current order data
+// │   │   └── Methods:
+// │   │       └── setCurrentOrder(order)
+// │   └── Persisted State
+// │       ├── Name: 'auth-storage'
+// │       └── Storage: MMKV
+// └── Use Cases
+//     ├── User Authentication
+//     ├── User Logout
+//     ├── Managing Current Orders
+//     └── Accessing User Data
+

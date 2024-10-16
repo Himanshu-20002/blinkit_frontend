@@ -45,8 +45,10 @@ const CustomerLogin: FC = () => {
     Keyboard.dismiss();
     setLoading(true);
     try {
-      await customerLogin(phoneNumber);
-      resetAndNavigate('ProductDashboard');
+      const loginSuccess = await customerLogin(phoneNumber);
+      if (loginSuccess) {
+        resetAndNavigate('ProductDashboard');
+      }
     } catch (error) {
       Alert.alert('Error', 'Sorry, we could not log you in');
     }
@@ -167,7 +169,8 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   phoneText: {
-    marginRight: 9,
+    marginRight: 2,
+    marginLeft: 10, // Add left margin for spacing
     color: Colors.text,
     fontFamily: Fonts.SemiBold,
   },
@@ -189,3 +192,47 @@ const styles = StyleSheet.create({
   },
 });
 export default CustomerLogin;
+
+
+
+
+// CustomerLogin Component
+// ├── Imports
+// │   ├── Gesture Handling
+// │   ├── React and Hooks
+// │   ├── React Native Components
+// │   ├── Custom Components
+// │   ├── Utilities
+// │   └── Services
+// ├── State Variables
+// │   ├── gestureSequence (stores gesture inputs)
+// │   ├── phoneNumber (stores user input)
+// │   └── loading (indicates loading state)
+// ├── Keyboard Offset Handling
+// │   ├── Adjusts form position based on keyboard visibility
+// │   └── Animates the form's position
+// ├── Login Handling
+// │   ├── Dismisses keyboard
+// │   ├── Calls customerLogin service
+// │   ├── Navigates to ProductDashboard on success
+// │   └── Displays error alert on failure
+// ├── Gesture Handling
+// │   ├── Detects gesture direction
+// │   ├── Updates gesture sequence
+// │   └── Navigates to DeliveryLogin on specific sequence
+// ├── Rendering
+// │   ├── GestureHandlerRootView
+// │   ├── ProductSlider
+// │   ├── PanGestureHandler
+// │   ├── Animated.ScrollView
+// │   ├── CustomInput for phone number
+// │   ├── CustomButton for login
+// │   └── Footer with terms of service
+// └── Styles
+//     ├── Container styles
+//     ├── Sub-container styles
+//     ├── Content styles
+//     ├── Logo styles
+//     ├── Text styles
+//     ├── Footer styles
+//     └── Gradient styles

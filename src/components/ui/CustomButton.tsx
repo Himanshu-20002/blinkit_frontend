@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding:14,
-        borderRadius: 10,
+        borderRadius: 90,
         marginVertical: 15,
-        width: '100%',
+        width: '95%',
 
     },
     text:{

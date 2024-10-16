@@ -3,8 +3,6 @@ import React from 'react'
 import { useAuthStore } from '@state/authStore'
 
 const ProductDashboard = () => {
-    const {user} = useAuthStore()
-    console.log(user)
     console.log ("im product dashboard")
   return (
     <View>

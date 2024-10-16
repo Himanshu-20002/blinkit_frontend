@@ -25,3 +25,35 @@ export const mmkvStorage ={
     // Method to remove a key-value pair from storage
     removeItem: (key:string) => storage.delete(key)
 }
+
+
+
+
+
+// Storage System (MMKV)
+// ├── Token Storage
+// │   ├── Instance: tokenStorage
+// │   │   ├── Purpose: Store access and refresh tokens
+// │   │   ├── Methods:
+// │   │   │   ├── set(key, value)
+// │   │   │   ├── getString(key)
+// │   │   │   └── delete(key)
+// │   └── Use Cases:
+// │       ├── Store tokens after login
+// │       └── Remove tokens on logout
+// ├── General Storage
+// │   ├── Instance: storage
+// │   │   ├── Purpose: Store general app data
+// │   │   ├── Methods:
+// │   │   │   ├── set(key, value)
+// │   │   │   ├── getString(key)
+// │   │   │   └── delete(key)
+// │   └── Use Cases:
+// │       ├── Store user preferences
+// │       └── Retrieve app settings
+// └── Utility Object (mmkvStorage)
+//     ├── Methods:
+//     │   ├── setItem(key, value)
+//     │   ├── getItem(key)
+//     │   └── removeItem(key)
+//     └── Purpose: Simplify storage operations
