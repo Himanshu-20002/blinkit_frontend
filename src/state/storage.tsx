@@ -15,7 +15,11 @@ export const storage = new MMKV({
 // Exporting a utility object for easier storage operations
 export const mmkvStorage ={
     // Method to set a key-value pair in storage
-    setItem: (key:string, value:string) => storage.set(key,value),
+    setItem: (key:string, value:string) =>{
+        console.log('Setting item:', key, value);
+        storage.set(key,value);
+    },
+        
     // Method to get a value from storage by key
     getItem: (key:string) =>{
         const value = storage.getString(key);   

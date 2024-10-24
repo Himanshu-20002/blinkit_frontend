@@ -2,6 +2,7 @@ import {Colors, Fonts} from '../../utils/Constants';
 import {StyleSheet, Text, TextStyle} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import React from 'react';
+
 interface Props {
   variant?:
     | 'h1'
@@ -32,7 +33,8 @@ const CustomText: React.FC<Props> = ({
   onLayout,
   ...props
 }) => {
-  let computedFontSize: number;
+  let computedFontSize: number = RFValue(12); // Default value
+
   switch (variant) {
     case 'h1':
       computedFontSize = RFValue(fontSize || 22);
@@ -64,23 +66,31 @@ const CustomText: React.FC<Props> = ({
     case 'body':
       computedFontSize = RFValue(fontSize || 12);
       break;
+    default:
+      computedFontSize = RFValue(12); // Fallback to a default size
   }
+
   const fontFamilyStyle = {
     fontFamily,
   };
+
   return (
-    <Text onLayout={onLayout} style={[
+    <Text
+      onLayout={onLayout}
+      style={[
         styles.text,
-        {color: Colors.text, fontSize: computedFontSize},
+        { color: Colors.text, fontSize: computedFontSize },
         fontFamilyStyle,
         style,
       ]}
-      numberOfLines={numberOfLines !== undefined ? numberOfLines : undefined}
-      {...props}>
+      numberOfLines={numberOfLines}
+      {...props}
+    >
       {children}
     </Text>
   );
 };
+
 const styles = StyleSheet.create({
   text: {
     textAlign: 'left',

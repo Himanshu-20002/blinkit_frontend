@@ -8,7 +8,7 @@ export const appAxios = axios.create({
   baseURL: BASE_URL,
 });
 appAxios.interceptors.request.use(async config => {
-  const accessToken = await tokenStorage.get('accessToken');
+  const accessToken = await tokenStorage.getString('accessToken');
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }

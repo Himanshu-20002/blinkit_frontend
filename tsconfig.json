@@ -12,7 +12,9 @@
     "@types/*": ["types/*"],
     "@utils/*": ["utils/*"],
     "@services/*": ["services/*"],
-    "@state/*": ["state/*"]
+    "@state/*": ["state/*"],
+    "@styles/*": ["styles/*"],
+    "@features/*": ["features/*"]
    }
   }
 }

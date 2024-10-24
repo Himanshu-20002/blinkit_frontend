@@ -8,7 +8,9 @@ import CustomerLogin from '../features/auth/CustomerLogin';
 import DeliveryLogin from '../features/auth/DeliveryLogin';
 import ProductDashboard from '../features/dashboard/ProductDashboard';
 import DeliveryDashboard from '../features/delivery/DeliveryDashboard';
-
+import ProductCategories from '../features/category/ProductCategories';
+import ProductOrder from '../features/order/ProductOrder';
+import OrderSuccess from '../features/order/OrderSuccess';
 const Navigation: FC = () => {
   return (
     <NavigationContainer ref={navigationRef}>
@@ -17,7 +19,10 @@ const Navigation: FC = () => {
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="ProductDashboard" component={ProductDashboard} />
+        <Stack.Screen name="ProductCategories" component={ProductCategories} />
         <Stack.Screen name="DeliveryDashboard" component={DeliveryDashboard} />
+        <Stack.Screen name="ProductOrder" component={ProductOrder} />
+        <Stack.Screen name="OrderSuccess" component={OrderSuccess} />
         <Stack.Screen
           options={{
             animation: 'fade',

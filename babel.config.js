@@ -12,6 +12,10 @@ module.exports = {
         '@services': './src/services',
         '@state': './src/state',
         '@types': './src/types',
+        '@styles': './src/styles',
+        '@utils': './src/utils',
+        '@features': './src/features',
+        
       }
     }]
   ]
