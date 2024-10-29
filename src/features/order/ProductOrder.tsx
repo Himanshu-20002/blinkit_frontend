@@ -28,10 +28,10 @@ const ProductOrder: FC = () => {
   const [loading, setLoading] = useState(false);
 
   const handlePlaceOrder = async () => {
-    if (currentOrder != null) {
-      Alert.alert('let your first order to be delivered');
-      return;
-    }
+    // if (currentOrder != null) {
+    //   Alert.alert('let your first order to be delivered');
+    //   return;
+    // }
     const formattedData = cart.map(item => ({
       id: item._id,
       item: item._id,
@@ -43,10 +43,10 @@ const ProductOrder: FC = () => {
     }
     setLoading(true);
     const response = await createOrder(formattedData, totalItemPrice);
-    if (response != null) {
-      setCurrentOrder(response.data);
+    if (response !== null) {
+      setCurrentOrder(response.order);
       clearCart();
-      navigate('OrderSuccess', {...response.data});
+      navigate('OrderSuccess', {...response.order});
     } else {
       Alert.alert('there was an error placing the order');
     }

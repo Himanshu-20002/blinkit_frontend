@@ -45,13 +45,6 @@ const Visuals: FC = () => {
         source={require('../../assets/animations/raining.json')}
         style={styles.lottie}
       />
-      <LottieView
-        autoPlay={true}
-        enableMergePathsAndroidForKitKatAndAbove={true}
-        loop={true}
-        source={require('../../assets/animations/zonbi.json')}
-        style={styles.ghost}
-      />
     </Animated.View>
   );
 };

@@ -1512,6 +1512,11 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@socket.io/component-emitter@~3.1.0":
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz"
+  integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
+
 "@svgr/babel-plugin-add-jsx-attribute@8.0.0":
   version "8.0.0"
   resolved "https://registry.npmjs.org/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-8.0.0.tgz"
@@ -2495,7 +2500,7 @@ debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
+debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@~4.3.1, debug@~4.3.2:
   version "4.3.7"
   dependencies:
     ms "^2.1.3"
@@ -2631,6 +2636,22 @@ encodeurl@~1.0.2:
 
 encodeurl@~2.0.0:
   version "2.0.0"
+
+engine.io-client@~6.6.1:
+  version "6.6.2"
+  resolved "https://registry.npmjs.org/engine.io-client/-/engine.io-client-6.6.2.tgz"
+  integrity sha512-TAr+NKeoVTjEVW8P3iHguO1LO6RlUz9O5Y8o7EY0fU+gY1NYqas7NN3slpFtbXEsLMHk0h90fJMfKjRkQ0qUIw==
+  dependencies:
+    "@socket.io/component-emitter" "~3.1.0"
+    debug "~4.3.1"
+    engine.io-parser "~5.2.1"
+    ws "~8.17.1"
+    xmlhttprequest-ssl "~2.1.1"
+
+engine.io-parser@~5.2.1:
+  version "5.2.3"
+  resolved "https://registry.npmjs.org/engine.io-parser/-/engine.io-parser-5.2.3.tgz"
+  integrity sha512-HqD3yTBfnBxIrbnM1DoD6Pcq8NECnh8d4As1Qgh0z5Gg3jRRIqijury0CL3ghu/edArpUYiYqQiDUQBIs4np3Q==
 
 entities@^4.2.0, entities@^4.4.0:
   version "4.5.0"
@@ -4764,6 +4785,11 @@ react-native-pager-view@^6.4.1:
   resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.4.1.tgz"
   integrity sha512-HnDxXTRHnR6WJ/vnOitv0C32KG9MJjxLnxswuQlBJmQ7RxF2GWOHSPIRAdZ9fLxdLstV38z9Oz1C95+t+yXkcg==
 
+react-native-permissions@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/react-native-permissions/-/react-native-permissions-5.0.2.tgz"
+  integrity sha512-CsL0jSGTJZET/Mq5l14ZcemQtPSj1Ru6LLO/J/T5RUQKwu9PavJqun7LX2te6yQ0tUoi+lA/etRHpggRVW+o0A==
+
 react-native-reanimated-carousel@^3.5.1:
   version "3.5.1"
   resolved "https://registry.npmjs.org/react-native-reanimated-carousel/-/react-native-reanimated-carousel-3.5.1.tgz"
@@ -4838,7 +4864,7 @@ react-native-vector-icons@^10.2.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, react-native@>=0.42.0, react-native@>=0.46, react-native@>=0.59.0, react-native@>=0.6.0, react-native@0.75.4:
+react-native@*, react-native@>=0.42.0, react-native@>=0.46, react-native@>=0.59.0, react-native@>=0.6.0, react-native@>=0.70.0, react-native@0.75.4:
   version "0.75.4"
   dependencies:
     "@jest/create-cache-key-function" "^29.6.3"
@@ -4897,7 +4923,7 @@ react-test-renderer@18.3.1:
     react-shallow-renderer "^16.15.0"
     scheduler "^0.23.2"
 
-react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, react@^18.3.1, react@>=16.8, react@>=16.8.0, react@>=17.0.0, react@>=18.0.0, react@18.3.1:
+react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, react@^18.3.1, react@>=16.8, react@>=16.8.0, react@>=17.0.0, react@>=18.0.0, react@>=18.1.0, react@18.3.1:
   version "18.3.1"
   dependencies:
     loose-envify "^1.1.0"
@@ -5215,6 +5241,24 @@ snake-case@^3.0.4:
   dependencies:
     dot-case "^3.0.4"
     tslib "^2.0.3"
+
+socket.io-client@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.npmjs.org/socket.io-client/-/socket.io-client-4.8.1.tgz"
+  integrity sha512-hJVXfu3E28NmzGk8o1sHhN3om52tRvwYeidbj7xKy2eIIse5IoKX3USlS6Tqt3BHAtflLIkCQBkzVrEEfWUyYQ==
+  dependencies:
+    "@socket.io/component-emitter" "~3.1.0"
+    debug "~4.3.2"
+    engine.io-client "~6.6.1"
+    socket.io-parser "~4.2.4"
+
+socket.io-parser@~4.2.4:
+  version "4.2.4"
+  resolved "https://registry.npmjs.org/socket.io-parser/-/socket.io-parser-4.2.4.tgz"
+  integrity sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==
+  dependencies:
+    "@socket.io/component-emitter" "~3.1.0"
+    debug "~4.3.1"
 
 source-map-js@^1.0.1:
   version "1.2.1"
@@ -5714,10 +5758,20 @@ ws@^7:
 ws@^7.5.10:
   version "7.5.10"
 
+ws@~8.17.1:
+  version "8.17.1"
+  resolved "https://registry.npmjs.org/ws/-/ws-8.17.1.tgz"
+  integrity sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==
+
 xmlbuilder@^15.1.1:
   version "15.1.1"
   resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-15.1.1.tgz"
   integrity sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==
+
+xmlhttprequest-ssl@~2.1.1:
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/xmlhttprequest-ssl/-/xmlhttprequest-ssl-2.1.2.tgz"
+  integrity sha512-TEU+nJVUUnA4CYJFLvK5X9AOeH4KvDvhIfm0vV1GaQRtchnG0hgK5p8hw/xjv8cunWYCsiPCSDzObPyhEwq3KQ==
 
 xtend@~4.0.1:
   version "4.0.2"

@@ -15,13 +15,16 @@ export const useAuthStore = create<authStore>()(
     (set, get) => ({
       user: null,
       currentOrder: null,
-      setCurrentOrder: order => set({currentOrder: order}),
       setUser: user => set({user}),
+      setCurrentOrder: order => set({currentOrder: order}),
       logout: () => set({user: null, currentOrder: null}),
     }),
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => mmkvStorage),
+      // onRehydrateStorage: () => (state) => {
+      //   console.log('Rehydrated state:', state);
+      // },
     },
   ),
 );

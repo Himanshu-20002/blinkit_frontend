@@ -28,6 +28,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import withCart from '../cart/WithCart';
+import withLiveStatus from '../map/withLiveStatus';
 //Initial State: The drawer is closed and hidden from view. This is like the notice being off-screen, represented by the initial value of NOTICE_HEIGHT.
 const NOTICE_HEIGHT = -(NoticeHeight + 12); //positions the notice off-screen (above the visible area). This means that when the component first renders, the notice is hidden.
 
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     zIndex:999
   }
 });
-export default withCart(withCollapsibleContext(ProductDashboard));
+export default withLiveStatus(withCart(withCollapsibleContext(ProductDashboard)));
 //By wrapping ProductDashboard with withCollapsibleContext, you enable it to access the collapsible context, which can be useful for managing UI elements that depend on the scroll position or other collapsible states. This allows for a more dynamic and responsive user interface.
 
 //The primary purpose of withCollapsibleContext is to provide the wrapped component (in this case, ProductDashboard) with access to the collapsible context. This context includes shared state and methods related to the collapsible behavior, such as the current scroll position.
