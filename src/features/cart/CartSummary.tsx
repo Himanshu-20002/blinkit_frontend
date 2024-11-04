@@ -46,11 +46,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: screenWidth * 0.1,
-    height: screenHeight * 0.08,
-    borderRadius: screenWidth * 0.05,
+    width: screenWidth * 0.15,
+    height: screenHeight * 0.06,
+    borderRadius: 10,
     borderColor: Colors.border,
     borderWidth: 1,
+    resizeMode: 'contain',
+    backgroundColor: '#FFFFFF',
   },
   btn: {
     paddingHorizontal: screenWidth * 0.1,

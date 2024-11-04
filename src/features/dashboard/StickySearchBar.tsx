@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {
   StickyView,
   useCollapsibleContext,
@@ -8,7 +8,16 @@ import {Colors} from '../../utils/Constants';
 import {interpolate, useAnimatedStyle} from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 import SearchBar from '../../components/dashboard/SearchBar';
-const StickySearchBar: FC = () => {
+import AnimatedTab from '../../components/dashboard/AnimatedTab';
+
+type StickySearchBarProps = {
+  selectedIndex: number;
+  setSelectedIndex: (index: number) => void;
+};
+
+
+const StickySearchBar: FC<StickySearchBarProps> = ({selectedIndex,setSelectedIndex}) => {
+
   const {scrollY} = useCollapsibleContext(0);
   const animatedShadow = useAnimatedStyle(() => {
     //Automatic Updates: is the main feature that sets it apart from other animation libraries. It allows you to create animations that automatically update based on changes in the UI.
@@ -22,6 +31,18 @@ const StickySearchBar: FC = () => {
   return (
     <StickyView style={[backgroundColorChange]}>
       <SearchBar />
+      <AnimatedTab
+        data={[
+          {icon: 'home', label: 'home'},
+          {icon: 'bookmark-multiple', label: 'saved'},
+          {icon: 'food', label: 'food'},
+          {icon: 'bullseye', label: 'try it'},
+          {icon: 'gamepad', label: 'games'},
+        ]}
+        selectedIndex={selectedIndex}
+        onChange={(index) => {setSelectedIndex(index)}}
+      />
+
       <Animated.View style={[animatedShadow, styles.shadow]} />
     </StickyView>
   );

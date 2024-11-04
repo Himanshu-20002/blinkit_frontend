@@ -21,7 +21,7 @@ const LiveTracking: FC = () => {
 useEffect(() => {
   const fetchOrderDetails = async () => {
     try {
-      const data = await getOrderById(currentOrder?._id as any);
+      const data = await getOrderById(currentOrder?.orderId as any);
       if (data && data.order) {
         setCurrentOrder(data.order); // Ensure the correct structure is set
       } else {

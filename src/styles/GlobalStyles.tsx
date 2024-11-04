@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native';
 
 export const hocStyles = StyleSheet.create({
   cartContainer: {
-
     position:'absolute',
     bottom: 0,
     width: '100%',

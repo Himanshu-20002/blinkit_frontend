@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import NoticeAnimation from './NoticeAnimation';
 import {NoticeHeight} from '../../utils/Scaling';
 import Visuals from './Visuals';
@@ -33,6 +33,8 @@ import withLiveStatus from '../map/withLiveStatus';
 const NOTICE_HEIGHT = -(NoticeHeight + 12); //positions the notice off-screen (above the visible area). This means that when the component first renders, the notice is hidden.
 
 const ProductDashboard = () => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   const {scrollY,expand}= useCollapsibleContext()
   const previousScrollY=useRef<number>(0)
   const backtoTopStyle=useAnimatedStyle(()=>{
@@ -77,10 +79,28 @@ const ProductDashboard = () => {
   }, []);
 
   console.log('im product dashboard');
+ const renderVisuals=()=>{
+  switch (selectedIndex) {
+    case 0:
+      return <Visuals type="home" />;
+    case 1:
+      return <Visuals type="saved" />;
+    case 2:
+      return <Visuals type="food" />;
+    case 3:
+      return <Visuals type="tryIt" />;
+    case 4:
+      return <Visuals type="games" />;
+    default:
+      return <Visuals type="default" />;
+  }
+};
+
+
+
   return (
     <NoticeAnimation noticePosition={noticePosition}>
       <>
-        <Visuals />
         <SafeAreaView />
         <Animated.View style={[styles.backToTop,backtoTopStyle]}>
           <TouchableOpacity
@@ -103,13 +123,27 @@ const ProductDashboard = () => {
                 }, 3500);
                 return () => clearTimeout(timeoutId);
               }}
+              />
+              
+            <StickySearchBar 
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
             />
-            <StickySearchBar />
+          
+
+
+    
           </CollapsibleHeaderContainer>
           <CollapsibleScrollView
             nestedScrollEnabled
             style={styles.panelContainer}
             showsVerticalScrollIndicator={false}>
+              
+        {renderVisuals()}
+            
+            
+             
+            
             <ContentContainer />
 
             <View style={{backgroundColor: '#F8F8F8', padding: 20}}>
@@ -133,10 +167,22 @@ const ProductDashboard = () => {
 };
 const styles = StyleSheet.create({
   panelContainer: {
-    flex: 1,
+   flex:1,
+   backgroundColor:'orange'
   },
   transparent: {
     backgroundColor: 'transparent',
+  },
+  visualsContainer:{
+    position:'absolute',
+    bottom:0,
+    right:0,
+    top:0,
+    left:0,
+    backgroundColor:'#000',
+    padding:10,
+    alignSelf:"center",
+    zIndex:-1
   },
   backToTop:{
     position:'absolute',
@@ -147,10 +193,53 @@ const styles = StyleSheet.create({
     borderRadius:100
     ,alignSelf:"center",
     gap:4,
-    zIndex:999
+    zIndex:999,
   }
 });
 export default withLiveStatus(withCart(withCollapsibleContext(ProductDashboard)));
 //By wrapping ProductDashboard with withCollapsibleContext, you enable it to access the collapsible context, which can be useful for managing UI elements that depend on the scroll position or other collapsible states. This allows for a more dynamic and responsive user interface.
 
 //The primary purpose of withCollapsibleContext is to provide the wrapped component (in this case, ProductDashboard) with access to the collapsible context. This context includes shared state and methods related to the collapsible behavior, such as the current scroll position.
+
+
+
+// ProductDashboard
+// ├── Imports
+// │   ├── React and React Native Components
+// │   ├── Custom Components (NoticeAnimation, Visuals, etc.)
+// │   ├── Utility Functions and Constants
+// │   ├── Higher-Order Components (withCart, withLiveStatus, etc.)
+// │   ├── Animation Libraries (react-native-reanimated, etc.)
+// ├── Constants
+// │   └── NOTICE_HEIGHT
+// ├── Hooks
+// │   ├── useCollapsibleContext
+// │   ├── useRef
+// │   ├── useEffect
+// │   └── useAnimatedStyle
+// ├── Animated Values
+// │   └── noticePosition
+// ├── Functions
+// │   ├── slideUp
+// │   └── slideDown
+// ├── Effects
+// │   └── useEffect for notice animation
+// ├── Render
+// │   ├── NoticeAnimation
+// │   ├── Visuals
+// │   ├── SafeAreaView
+// │   ├── Animated.View (Back to Top Button)
+// │   │   └── TouchableOpacity (Back to Top Action)
+// │   ├── CollapsibleContainer
+// │   │   ├── CollapsibleHeaderContainer
+// │   │   │   ├── AnimatedHeader
+// │   │   │   └── StickySearchBar
+// │   │   └── CollapsibleScrollView
+// │   │       ├── ContentContainer
+// │   │       └── View (Footer Text)
+// ├── Styles
+// │   ├── panelContainer
+// │   ├── transparent
+// │   └── backToTop
+// └── Export
+//     └── withLiveStatus(withCart(withCollapsibleContext(ProductDashboard)))

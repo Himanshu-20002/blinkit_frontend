@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
     height: 100,
   },
   imageContainer: {
-    width: '50%',
-    height: '50%',
+    width: '55%',
+    height: '40%',
     borderRadius: 100,
     marginBottom: 10,
     justifyContent: 'center',
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   selectedImageContainer: {
-    backgroundColor: '#44C2C9',
+    backgroundColor: '#70C944',
   },
   indicator: {
     position: 'absolute',
