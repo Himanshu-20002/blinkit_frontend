@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useCartStore} from '../../state/cartStore';
 import {RFValue} from 'react-native-responsive-fontsize';
 import CustomText from './CustomText';
+import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 
 const UniversalAdd: FC<{item: any}> = ({item}) => {
   const count = useCartStore(state => state.getItemCount(item._id));
@@ -14,7 +15,7 @@ const UniversalAdd: FC<{item: any}> = ({item}) => {
     <View
       style={[
         styles.container,
-        {backgroundColor: count === 0 ? '#FFFFFF' : Colors.secondary},
+        {backgroundColor: count === 0? '#FFFFFF' : Colors.secondary},
       ]}>
       {count === 0 ? (
         <Pressable onPress={() => addItem(item)} style={styles.add}>

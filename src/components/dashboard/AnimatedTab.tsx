@@ -1,3 +1,4 @@
+import React from 'react';
 import { Animated, Dimensions, ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomText from '@components/ui/CustomText';
@@ -25,9 +26,9 @@ export default function AnimatedTab({
   selectedIndex,
   onChange,
   activeColor='white',
-  inactiveColor='darkslategray',
-  activeBackgroundColor='lightcoral',
-  inactiveBackgroundColor='darkgray',
+  inactiveColor='green',
+  activeBackgroundColor='red',
+  inactiveBackgroundColor='#E9E9E9E1',
 
 }: TabsProps) {
   const screenWidth = Dimensions.get('window').width;
@@ -73,5 +74,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
     marginHorizontal:10,
     marginTop:10,
+    // backgroundColor:'#E9E9E9E1'
+    backgroundColor:'#D9D9D9CA'
   }
 })

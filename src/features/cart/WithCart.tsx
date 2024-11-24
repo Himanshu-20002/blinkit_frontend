@@ -15,7 +15,7 @@ const WithCart = <P extends object>(WrappedComponent: React.ComponentType<P>): F
         <CartAnimationWrapper cartCount={cartCount}>
           <CartSummary
             cartCount={cartCount}
-            cartImage={cart![0]?.item?.image || null}
+            cartImage={cart![0]?.item?.images[0] || null}
           />
         </CartAnimationWrapper>
       </View>

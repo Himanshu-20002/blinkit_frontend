@@ -36,8 +36,9 @@ const StickySearchBar: FC<StickySearchBarProps> = ({selectedIndex,setSelectedInd
           {icon: 'home', label: 'home'},
           {icon: 'bookmark-multiple', label: 'saved'},
           {icon: 'food', label: 'food'},
-          {icon: 'bullseye', label: 'try it'},
+          {icon: 'bullseye', label: 'BlkFriday'},
           {icon: 'gamepad', label: 'games'},
+          {icon: 'sale', label: 'sale'},
         ]}
         selectedIndex={selectedIndex}
         onChange={(index) => {setSelectedIndex(index)}}

@@ -6,10 +6,15 @@ const ProductList:FC<{data:any}> = ({data}) => {
 
 
   const renderItem = ({item,index}:any) => {
-    return <ProductItem item={item} index={index}/>
+    return (
+      <ProductItem item={item} index={index}/>
+      
+    )
+    
 
     
 }
+
 //- **Source:** The `renderItem` function is defined in your `ProductList` component. It takes an object with `item` and `index` properties and returns a `ProductItem` component for each product.
   
   

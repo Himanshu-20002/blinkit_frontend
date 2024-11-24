@@ -100,6 +100,7 @@ const ProductDashboard = () => {
 
   return (
     <NoticeAnimation noticePosition={noticePosition}>
+      
       <>
         <SafeAreaView />
         <Animated.View style={[styles.backToTop,backtoTopStyle]}>
@@ -137,14 +138,18 @@ const ProductDashboard = () => {
           <CollapsibleScrollView
             nestedScrollEnabled
             style={styles.panelContainer}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+            
+            >
+              {renderVisuals()}
               
-        {renderVisuals()}
             
             
              
             
-            <ContentContainer />
+            <ContentContainer 
+              selectedIndex={selectedIndex}
+             />
 
             <View style={{backgroundColor: '#F8F8F8', padding: 20}}>
               <CustomText
@@ -168,7 +173,7 @@ const ProductDashboard = () => {
 const styles = StyleSheet.create({
   panelContainer: {
    flex:1,
-   backgroundColor:'orange'
+   backgroundColor:'rgb(246 223 147)'
   },
   transparent: {
     backgroundColor: 'transparent',

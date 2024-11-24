@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 999,
     position: 'absolute',
+    top: 0,
   },
   contentContainer: {
     flex: 1,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#524093',
   },
 });
 

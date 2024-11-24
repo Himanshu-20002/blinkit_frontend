@@ -5,22 +5,27 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RFValue } from 'react-native-responsive-fontsize'
 import RollingBar from 'react-native-rolling-bar'
 import CustomText from '@components/ui/CustomText'
-const SearchBar:FC = () => {
+import { navigate } from '@utils/NavigationUtils';
+const SearchBar: FC = () => {
   return (
-   <TouchableOpacity style={styles.container} activeOpacity={0.8}>
-    <Icon name="curtains" color="#000000" size={RFValue(20)}  style={styles.profile}/>
-    <RollingBar interval={3000} defaultStyle={false} customStyle={styles.textContainer}>
-    <CustomText variant='h6' style={styles.Medium}>Search "milk"</CustomText>
-    <CustomText variant='h6' style={styles.Medium}>Search "jalabi"</CustomText>
-    <CustomText variant='h6' style={styles.Medium}>Search "water"</CustomText>
-    <CustomText variant='h6' style={styles.Medium}>Search "pooja thali"</CustomText>
-    <CustomText variant='h6' style={styles.Medium}>Search "y-food"</CustomText>
-    </RollingBar>
-    <View style={styles.divider}/>
-    <Icon name="microphone" color="#000000" size={RFValue(20)}  style={styles.profile}/>
-   </TouchableOpacity>
-  )
-}
+    <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={
+      () => {
+        navigate('SearchProducts')
+      }
+    }>
+      <Icon name="curtains" color="#000000" size={RFValue(20)} style={styles.profile} />
+      <RollingBar interval={3000} defaultStyle={false} customStyle={styles.textContainer}>
+        <CustomText variant="h6" style={styles.Medium}>Search &quot;milk&quot;</CustomText>
+        <CustomText variant="h6" style={styles.Medium}>Search &quot;jalabi&quot;</CustomText>
+        <CustomText variant="h6" style={styles.Medium}>Search &quot;water&quot;</CustomText>
+        <CustomText variant="h6" style={styles.Medium}>Search &quot;pooja thali&quot;</CustomText>
+        <CustomText variant="h6" style={styles.Medium}>Search &quot;y-food&quot;</CustomText>
+      </RollingBar>
+      <View style={styles.divider} />
+      <Icon name="microphone" color="#000000" size={RFValue(20)} style={styles.profile} />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

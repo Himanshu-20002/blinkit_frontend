@@ -10,10 +10,11 @@ import UniversalAdd from '../../components/ui/UniversalAdd';
 const ProductItem: FC<{item: any; index: number}> = ({item, index}) => {
 const isSecondColoumn = index%2!=0
 
+
   return (
-    <View style={[styles.container, {marginRight: isSecondColoumn ? 10 : 0}]}>
+    <View style={[styles.container, {marginRight: isSecondColoumn ? 0 : 0}]}>
         <View style={styles.imageContainer}>
-            <Image source={{uri: item.image}} style={styles.image}/>
+            <Image source={{uri: item.images[0]}} style={styles.image}/>
         </View>
         <View style={styles.content}>
         <View style={styles.flexRow}>
@@ -23,7 +24,7 @@ const isSecondColoumn = index%2!=0
         <CustomText variant='h8' numberOfLines={2}style={{marginVertical:4}} fontFamily={Fonts.Medium}>{item.name}</CustomText>
         <View style={styles.priceContainer}>
             <View>
-            <CustomText variant='h8' fontFamily={Fonts.Medium}>₹{item?.price}</CustomText>
+            <CustomText variant='h8' fontFamily={Fonts.Medium}>{item?.price}</CustomText>
             <CustomText variant='h8' style={{opacity:0.5,textDecorationLine:'line-through',color:'#3A1D52'}} fontFamily={Fonts.Medium}>{item?.price}</CustomText>
             </View>
            <UniversalAdd item={item}/>

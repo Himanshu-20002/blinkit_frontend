@@ -39,7 +39,8 @@ const CategoryContainer: FC<{data: any}> = ({data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>{renderItems(data?.slice(0, 4))}</View>
-      <View style={styles.row}>{renderItems(data?.slice(4))}</View>
+      <View style={styles.row}>{renderItems(data?.slice(4, 8))}</View>
+      <View style={styles.row}>{renderItems(data?.slice(8, 10))}</View>
     </View>
   );
 };

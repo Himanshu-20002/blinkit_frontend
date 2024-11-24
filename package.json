@@ -11,6 +11,7 @@
     "postinstall": "npx patch-package"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^5.0.5",
     "@homielab/react-native-auto-scroll": "^0.0.10",
     "@r0b0t3d/react-native-collapsible": "^1.4.3",
     "@react-native-community/blur": "^4.4.1",
@@ -19,6 +20,7 @@
     "@react-native-vector-icons/ionicons": "^7.4.0-alpha.34",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
+    "@shopify/flash-list": "^1.7.2",
     "axios": "^1.7.7",
     "jwt-decode": "^4.0.0",
     "lottie-react-native": "^7.0.0",

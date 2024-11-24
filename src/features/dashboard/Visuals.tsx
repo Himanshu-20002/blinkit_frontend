@@ -1,20 +1,16 @@
-import {adData, productsList} from '../../utils/dummyData';
-import {Dimensions, TouchableOpacity} from 'react-native';
+
+import {Dimensions,} from 'react-native';
 import {View, StyleSheet, Image, ViewStyle} from 'react-native';
 import Animated from 'react-native-reanimated';
 import React, {FC} from 'react';
-// import {screenHeight, screenWidth} from '../../utils/Scaling';
 import LinearGradient from 'react-native-linear-gradient';
-import {darkWeatherColors, Fonts} from '../../utils/Constants';
+import {darkWeatherColors} from '../../utils/Constants';
 import LottieView from 'lottie-react-native';
 import {interpolate, useAnimatedStyle} from 'react-native-reanimated';
 import {useCollapsibleContext} from '@r0b0t3d/react-native-collapsible';
 import Video from 'react-native-video';
 import {BlurView} from '@react-native-community/blur';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import CustomText from '@components/ui/CustomText';
-import AdCarousal from '@components/dashboard/AdCarousal';
-
+import SavedFlatlist from './flatlist/SavedFlatlist';
 
 
 //implementation of on Refresh Visuals changes including change in all theme and 1 dark mode and loading animation
@@ -26,32 +22,61 @@ import AdCarousal from '@components/dashboard/AdCarousal';
 // implementation of haptic feedback in tuch vibrations and sound in placing and order and adding to cart  and payment  sound effect of money and sound effect of success and sound effect of error
 // Theme 3: Loading Animation
 
-
-
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+const FULL_WIDTH = screenWidth;
 
 type VisualsProps = {
   type: string;
 };
 
-
-
 const Visuals: FC<VisualsProps> = ({type}) => {
   //When you call const { scrollY } = useCollapsibleContext(); in your Visuals.tsx file, you are destructuring the context object to get the scrollY animated value. This value represents the current vertical scroll position and is updated as the user scrolls.
   const {scrollY} = useCollapsibleContext();
   const headerAnimatedStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(scrollY.value, [0, 120], [1, 0]);
+    const opacity = interpolate(scrollY.value, [0, 120], [1, 0.6]);
     return {
       opacity,
     };
   });
+
+  const leftAnimatedStyle = useAnimatedStyle(() => {
+    const leftPosition = interpolate(scrollY.value, [0, 100], [-44, 100]);
+    console.log(leftPosition);
+    return {
+      position: 'absolute',
+      right: 0,
+      bottom: 0,
+      top: 130,
+      left: leftPosition,
+      width: 250,
+      height: 250,
+      transform: [{scaleX: -1}],
+      zIndex: -22,
+    };
+  });
+
+  const birdAnimatedStyle = useAnimatedStyle(() => {
+    const birdPosition = interpolate(scrollY.value, [0, 100], [44, 100]);
+    return {
+      position: 'absolute',
+      right: 6,
+      bottom: 0,
+      top: 130,
+      left: birdPosition,
+      // transform: [{scaleX: -1}],
+      zIndex: -22,
+    };
+  });
+
+ 
+
   const animationSource = () => {
     switch (type) {
       case 'home':
         return require('../../assets/animations/raining.json');
       //deliveryGuy
       case 'saved':
-        return require('../../assets/animations/expAnimation/themeButton.json');
+        return require('../../assets/animations/expAnimation/5.json');
       case 'food':
         return require('../../assets/animations/expAnimation/1.json');
       case 'tryIt':
@@ -64,13 +89,13 @@ const Visuals: FC<VisualsProps> = ({type}) => {
     }
   };
   // Function to determine dynamic styles based on type
-  const dynamicStyles = ():{lottieContainer:ViewStyle,lottie:ViewStyle} => {
+  const dynamicStyles = (): {lottieContainer: ViewStyle; lottie: ViewStyle} => {
     switch (type) {
       case 'home':
         return {
           lottieContainer: {
             borderRadius: 0,
-            // backgroundColor: 'darkorange', // Ensure the background is visible
+            // backgroundColor: 'rgba(246 210 46 / 0.65)',
             padding: 10, // Add padding if needed
             position: 'absolute',
             top: 0,
@@ -109,21 +134,22 @@ const Visuals: FC<VisualsProps> = ({type}) => {
             overflow: 'hidden', // Ensure corners are clipped
           },
           lottie: {
-            width: 400,
-            height: 460,
             position: 'absolute',
+            right: 0,
+            bottom: 0,
+            top: 130,
+            left: 44,
+            width: 250,
+            height: 250,
             transform: [{scaleX: -1}],
-            top: 16,
-            left: 7,
-            right: 5,
-            bottom: 5,
+            zIndex: -22,
           },
         };
       case 'food':
         return {
           lottieContainer: {
             borderRadius: 0,
-            backgroundColor: 'orangered', // Ensure the background is visible
+            backgroundColor: '#E43F3F', // Ensure the background is visible
             padding: 10, // Add padding if needed
             position: 'absolute',
             top: 0,
@@ -134,13 +160,13 @@ const Visuals: FC<VisualsProps> = ({type}) => {
           },
           lottie: {
             width: '100%',
-            height: 500,
+            height: 400,
             position: 'absolute',
             transform: [{scaleX: -1}],
-            top: 9,
-            left: 7,
+            top: 170,
+            left: 0,
             right: 5,
-            bottom: 5,
+            bottom: 0,
           },
         };
       case 'tryIt':
@@ -190,7 +216,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
             right: 0,
             bottom: 0,
             borderRadius: 10,
-            opacity:-6
+            // opacity:-6
           },
         };
       default:
@@ -203,25 +229,8 @@ const Visuals: FC<VisualsProps> = ({type}) => {
 
   const DynamicStyles = dynamicStyles();
 
-  const renderItem = ({item,index}:any) =>{
-    return (
-        <View style={styles.featuredProductContainer}>
-          <View style={styles.featuredProductTextContainer}>
-            <CustomText variant="h5" fontFamily={Fonts.SemiBold}>
-              Featured
-            </CustomText>
-            <CustomText variant="h7" fontFamily={Fonts.SemiBold}>
-              {item.name}
-            </CustomText>
-          </View>
-          <Image
-            source={{uri: item.image}}
-            style={styles.productImage}
-          />
-        </View>
-    );
-  }
 
+  // headerAnimatedStyle
   return (
     <Animated.View style={[styles.container, headerAnimatedStyle]}>
       <LinearGradient colors={darkWeatherColors} style={styles.gradient} />
@@ -229,6 +238,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
         source={require('../../assets/images/cloud.png')}
         style={styles.cloud}
       />
+
       {type === 'tryIt' && (
         <Video
           source={require('../../assets/video/PurpleStar.mp4')}
@@ -243,7 +253,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
           <Video
             source={require('../../assets/video/dancing.mp4')}
             style={styles.video}
-            resizeMode='cover'
+            resizeMode="cover"
             repeat={true}
             muted={true} // Mute the video if you don't want sound
           />
@@ -254,18 +264,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
           />
         </View>
       )}
-      {/* {type === 'saved' && (
-        <View style={styles.videoContainer}>
-          <Video
-            source={require('../../assets/video/road.mp4')}
-            style={styles.video}
-            resizeMode="cover"
-            repeat={true}
-            muted={true} // Mute the video if you don't want sound
-          />
-        </View>
-      )} */}
-      <View style={DynamicStyles.lottieContainer}>
+      <View style={[DynamicStyles.lottieContainer ,]}>
         <View style={styles.lottieWrapper}>
           <LottieView
             autoPlay={true}
@@ -274,29 +273,106 @@ const Visuals: FC<VisualsProps> = ({type}) => {
             source={animationSource()}
             style={[DynamicStyles.lottie as ViewStyle]} // Adjust height as needed
           />
-          {type === 'games' && (
+          {type === 'saved' && (
             <LinearGradient
               colors={['transparent', 'rgba(16 37 96 / 0.8)', 'fuchsia']} // Adjust colors for fade effect
               style={styles.lottieBottomFade}
             />
           )}
-          {type === 'saved' && (
-            <TouchableOpacity
-            style={[styles.touchableContainer, { borderWidth: 1, borderColor: 'red' }]}
-            onPress={() => {
-              console.log('pressed');
-            }}
-            activeOpacity={0.7}
-            >
-         
-              <FlatList
-                data={productsList}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-                // removeClippedSubviews={false}
-              />
-            </TouchableOpacity>
+          {type === 'games' && (
+            <LinearGradient
+              colors={['transparent', '#102560CC', 'fuchsia']} // Adjust colors for fade effect
+              style={styles.lottieBottomFade}
+            />
           )}
+          {type === 'home' && (
+            <LinearGradient
+              colors={['transparent', '#102560CC', 'fuchsia']} // Adjust colors for fade effect
+              style={styles.lottieBottomFade}
+            />
+          )}
+         
+          {type === 'saved' && (
+            <Animated.View style={leftAnimatedStyle}>
+              <LottieView
+                autoPlay={true}
+                enableMergePathsAndroidForKitKatAndAbove={true}
+                loop={true}
+                source={require('../../assets/animations/expAnimation/deliveryGuy.json')}
+                style={styles.lottie}
+              />
+            </Animated.View>
+          )}
+          {type === 'saved' && (
+            <Animated.View style={birdAnimatedStyle}>
+              <LottieView
+                autoPlay={true}
+                enableMergePathsAndroidForKitKatAndAbove={true}
+                loop={true}
+                source={require('../../assets/animations/expAnimation/bird.json')}
+                style={styles.lottieBird}
+              />
+            </Animated.View>
+          )}
+
+          {type === 'saved' && (
+            <SavedFlatlist selectedIndex={1}/>
+          )}
+          {type === 'saved' && (
+            <Image
+              source={require('../../assets/images/yellowDecoration.jpg')}
+              style={styles.saveGhost}
+            />
+          )}
+          {type === 'food' && (
+            <Image
+              source={require('../../assets/images/textBackground.png')}
+              style={styles.foodBanner}
+            />
+          )}
+          {type === 'food' && (
+            <Image
+              source={require('../../assets/images/Pizza.png')}
+              style={styles.pizza}
+            />
+          )}
+          {type === 'food' && (
+            <Image
+              source={require('../../assets/images/cheese-burger.png')}
+              style={styles.burger}
+            />
+          )}
+          {type === 'food' && (
+            <Image
+              source={require('../../assets/images/topbar3.png')}
+              style={styles.tasteOfItalia}
+            />
+          )}
+          {type === 'food' && (
+            <Image
+              source={require('../../assets/images/dish.png')}
+              style={styles.dish}
+            />
+          )}
+             {type === 'food' && (
+            <LinearGradient
+              colors={['transparent', 'rgb(194 38 38)', 'lightpink']} // Adjust colors for fade effect
+              style={styles.lottieBottomFadeFood}
+            />
+          )}
+             {type === 'food' && (
+            <LinearGradient
+              colors={['transparent', 'rgb(194 38 38)', 'lightpink']} // Adjust colors for fade effect
+              style={styles.lottieTopFadeFood}
+            />
+          )}
+          {type === 'home' && (
+            <Image
+              source={require('../../assets/images/2.jpg')}
+              style={styles.homeGhost}
+            />
+          )}
+
         </View>
       </View>
     </Animated.View>
@@ -309,14 +385,97 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    backgroundColor: '#FFEC43'
   },
-  touchableContentContainer: {
-   
+  saveGhost: {
+    width: '100%',
+    height: 400,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 0,
+    right: 0,
+    left: 0,
+    zIndex: -99,
+  },
+  pizza: {
+    width: '100%',
+    height: 400,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 170,
+    right: 0,
+    left: -20,
+    zIndex: 99,
+  },
+  burger: {
+    width: '20%',
+    height: 80,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 345,
+    right: 0,
+    left: 40,
+    zIndex: 98,
+  },
+  dish: {
+    width: '50%',
+    height: 200,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 290,
+    right: 0,
+    left: 230,
+    zIndex: 98,
+  },
+  foodBanner: {
+    width: '100%',
+    height: 400,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 95,
+    right: 0,
+    left: 0,
+    zIndex: -99,
+  },
+  homeGhost: {
+    width: '100%',
+    height: 500,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 0,
+    right: 0,
+    left: 0,
+    zIndex: -99,
+  },
+  tasteOfItalia: {
+    width: '100%',
+    height: 110,
+    position: 'absolute',
+    // transform: [{scaleX: -1}],
+    top: 0,
+    right: 0,
+    left: 0,
+    zIndex: -99,
+    opacity:0.8
+  },
+  touchableContentContainer: {},
+  touchableContainer2: {
+    width: '100%',
+    height: 150,
+    zIndex: 1000,
+    overflow: 'hidden',
+    position: 'absolute',
+    // backgroundColor:'rgb(246 245 233)',
+    top: 330,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    marginRight: 1,
   },
   touchableContainer: {
-    width:'90%',
-    height: 100,
-    zIndex: 1000,
+    width: '90%',
+    height: 150,
+    zIndex: 100,
     backgroundColor: 'orangered',
     borderRadius: 9,
     overflow: 'hidden',
@@ -326,40 +485,103 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     marginRight: 100,
-    
   },
   featuredProductTextContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems:'flex-start',
-    gap: 20,
+    // flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: 0,
     marginLeft: 10,
-    marginTop: -30,
+    zIndex: 1000,
+    position:'absolute',
+    width:90,
+    height:60,
+    top:3,
+    left:0,
+    right:0,
+    bottom:0
+    
   },
   featuredProductContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    width: 400,
+    height: 100,
+    zIndex: 1000,
+    gap: 10,
+    
+
     // backgroundColor: 'limegreen',
   },
   productImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
+    width: 130,
+    height: 130,
+    borderRadius: 13,
+    borderWidth: 3,
+    zIndex: 1000,
+    position:'absolute',
+    top:0,
+    left:270,
+    right:0,
+    bottom:0
   },
-  lottieWrapper: {
-    position: 'relative',
-    width: 450, // Use screen width for responsiveness
-    height: 460, // Adjust height as needed for responsiveness
-    overflow: 'hidden', // Ensure the gradient is clipped to the Lottie animation
+  productBackgroundImage: {
+    width: '100%',
+    height: 130,
+    borderRadius: 13,
+    zIndex: 99,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    // opacity:0.9
   },
+
+  
   lottieBottomFade: {
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
     height: 90, // Small height for a subtle border fade
+    zIndex:9999,
+    top:385
+  },
+  lottieBottomFadeHome: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top:770,
+    height: 90, // Small height for a subtle border fade
+   transform: [{scaleY: -1}],
+   zIndex:9999,
+   
+   
+  },
+  lottieBottomFadeFood: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top:450,
+    height: 50, // Small height for a subtle border fade
+   transform: [{scaleY: -1}],
+   zIndex:9,
+   
+   
+  },
+  lottieTopFadeFood: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 93,
+    height: 50, // Small height for a subtle border fade
+   transform: [{scaleY: -1}],
+   
   },
   bottomFade: {
     position: 'absolute',
@@ -376,7 +598,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: -1,
     overflow: 'hidden',
-
   },
   // lottieContainer: {
   //   position: 'absolute',
@@ -396,17 +617,36 @@ const styles = StyleSheet.create({
     zIndex: -1, // Ensure the video is behind other content
     // opacity:0.01,
   },
-  ghost: {
-    width: '70%',
-    height: 70,
-    position: 'absolute',
-    transform: [{scaleX: -1}],
-  },
+
   lottie: {
     width: '100%',
-    height: 150,
+    height: 120,
     position: 'absolute',
-    transform: [{scaleX: -1}], 
+    // transform: [{scaleX: -1}],
+    right: 0,
+    bottom: 0,
+    top: 80,
+    left: -10,
+    zIndex: -9999,
+  },  
+  lottieWrapper:{
+    position:'absolute',
+    top:0,
+    left:0,
+    right:0,
+    bottom:0,
+    zIndex:9999
+  },
+  lottieBird: {
+    width: 150,
+    height: 20,
+    position: 'absolute',
+    transform: [{scaleX: -1}],
+    right: 44,
+    bottom: 0,
+    top: 85,
+    left: 0,
+    zIndex: -9999,
   },
   gradient: {
     width: '100%',
