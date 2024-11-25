@@ -29,10 +29,10 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, BottomSheetProps>(
   ({ children }, ref) => {
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
- 
+    const context = useSharedValue({ y: 0 });
+
     const scrollTo = useCallback((destination: number) => {
       'worklet';
-      console.log('Scrolling to:', destination);
       active.value = destination !== 0;
       translateY.value = withSpring(destination, { damping: 50 });
     }, []);
@@ -43,8 +43,7 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, BottomSheetProps>(
 
     useImperativeHandle(ref, () => ({ scrollTo, isActive }), [scrollTo, isActive]);
 
-    const context = useSharedValue({ y: 0 });
-    const gesture = Gesture.Pan()
+    const handleGesture = Gesture.Pan()
       .onStart(() => {
         context.value = { y: translateY.value };
       })
@@ -77,12 +76,17 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, BottomSheetProps>(
     });
 
     return (
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
-          <View style={styles.line} />
+      <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
+        <GestureDetector gesture={handleGesture}>
+          <View style={styles.handleContainer}>
+            <View style={styles.line} />
+          </View>
+        </GestureDetector>
+        
+        <View style={styles.contentContainer}>
           {children}
-        </Animated.View>
-      </GestureDetector>
+        </View>
+      </Animated.View>
     );
   }
 );
@@ -95,6 +99,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: SCREEN_HEIGHT,
     borderRadius: 25,
+  },
+  handleContainer: {
+    height: 40,
+    width: '100%',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    zIndex: 1,
+  },
+  contentContainer: {
+    flex: 1,
   },
   line: {
     width: 75,

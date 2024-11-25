@@ -135,7 +135,7 @@ export const productHeader =
             name: 'Pizza',
             image: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731090923/pizza1_skfa9k.png',
             backgroundImage: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731178795/Untitled_design_6_tf8gyk.jpg',
-            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731409647/c4a8434f-874d-46fb-a966-30bb3096c995_szwdif.png',
+            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732525479/4_iaz2c6.png',
             categoryID:'67436448305470d18cdbca33'
         },
         {
@@ -143,7 +143,7 @@ export const productHeader =
             name: 'kfc',
             image: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731151643/62886e38-958c-458d-aee7-1acb63e7ef9f_zxu36hs_2k_i0dkia.png',
             backgroundImage: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731152820/OIP_2_nnlrun.jpg',
-            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731152820/OIP_2_nnlrun.jpg',
+            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732525479/5_zetjvq.png',
             categoryID:'674364b4305470d18cdbca3e'
    
         },
@@ -152,22 +152,23 @@ export const productHeader =
             name: 'cooking essentials',
             image: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731092093/category_1_aq1ici.png',
             backgroundImage: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731182694/Untitled_design_8_pohnc6.jpg',
-            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731150931/alchemyrefiner_alchemymagic_3_57822dec-db9d-477d-80b2-8864506c6b96_0_nygfne.jpg',
+            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732525481/3_iarahy.png',
             categoryID:'6740e58eafaba47dc6654458'
         },
         {
             id: 4,
             name: 'vegetables',
-            image: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731152273/wp1881539-vegetables-wallpapers_rgciyv.png',
+            image: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732522045/OIP_3_1_1_w3xw9s.png',
             backgroundImage: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731184646/Untitled_design_9_ygf6eu.jpg',
-            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731150931/alchemyrefiner_alchemymagic_3_57822dec-db9d-477d-80b2-8864506c6b96_0_nygfne.jpg',
+            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732522906/Untitled_design_10_waa7ck.png',
             categoryID:'6740e58eafaba47dc6654454'
         },
         {
             id: 5,
             name: 'Electronics',
+            image:'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732521457/1000_F_563793333_5LSN77mnmFhLCam0r5f0E8PDYGRMEeIM_rcydzb.png',
             backgroundImage: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731172595/Untitled_design_5_l8wdbc.jpg',
-            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1731167552/Untitled_design_2_dmgors.png',
+            backgroundImage2: 'https://res.cloudinary.com/duyyhs6ef/image/upload/v1732522211/Untitled_design_2_hpasrh.png',
               categoryID:'6740e58eafaba47dc6654456'
 
         },
@@ -225,6 +226,16 @@ export const categories = [
     {
         id: 10,
         name: "Kitchenware",
+        image: require('../assets/category/10.png')
+    },
+    {
+        id: 11,
+        name: "monster chef",
+        image: require('../assets/category/monster.png')
+    },
+    {
+        id: 12,
+        name: "viving",
         image: require('../assets/category/10.png')
     }
 ]

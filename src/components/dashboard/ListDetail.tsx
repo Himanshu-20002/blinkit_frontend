@@ -19,7 +19,7 @@ const ListDetail = ({route}: any) => {
   const [products, setProducts] = useState<any[]>([]);
   const fetchProductsBycategoryId = async (Id: string) => {
     const response = await getProductsByCategoryId(Id);
-    setProducts(response);
+    setProducts(response.slice(0,30));
   };
   useEffect(() => {
     fetchProductsBycategoryId(categoryID);
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
     position: 'absolute',
-    top: -339,
+    top: -46,
     left: 0,
   },
   featuredProductContainer: {

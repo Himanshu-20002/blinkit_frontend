@@ -51,6 +51,7 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
     textHeader: {
       zIndex: 1000,
       marginBottom: 4,
+      marginTop:12
     },
     homeLinearGradient: {
       height: 150,
@@ -112,23 +113,26 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
 
   const [products, setProducts] = useState<any[]>([]);
   const [productsLoading, setProductsLoading] = useState(false);
-
-  const fetchProducts = async (categoryId: string) => {
+  const [currentCategoryId, setCurrentCategoryId] = useState('');
+  
+  const fetchProducts = useCallback(async(categoryId: string)=> {
     try {
       setProductsLoading(true);
       const response = await getProductsByCategoryId(categoryId);
-      setProducts(response.slice(0, 10));
+      setProducts((response.slice(0, 8)));
     } catch (error) {
       console.log('Error fetching Products', error);
     } finally {
       setProductsLoading(false);
     }
-  };
+  },[]);
   useEffect(() => {
-    fetchProducts('6741c69799ee3a4b31a42a22');
-    console.log('DATA FETCHED ', selectedIndex);
-    fetchOrders();
-  }, [selectedIndex]);
+    fetchProducts(currentCategoryId);
+  }, [currentCategoryId, fetchProducts]);
+
+  const handleCategoryChange = useCallback((newCategoryId: string) => {
+    setCurrentCategoryId(newCategoryId);
+  }, []);
 
 
   const [subcategory, setSubcategory] = useState<any[]>([]);
@@ -138,7 +142,7 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
     try {
       // setSubcategoryProductsLoading(true);
       const response = await getSubcategory();
-      setSubcategory(response.slice(3, 13));
+      setSubcategory(response.slice(3, 20));
      
     } catch (error) {
       console.log('Error fetching Subcategory Products', error);
@@ -148,6 +152,7 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
     fetchSubcategory();
     console.log('DATA FETCHED ', selectedIndex);
     fetchOrders();
+
   }, [selectedIndex]);
 
   // const formatTime = (seconds: number) => {
@@ -163,7 +168,7 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
       // setSubcategoryProductsLoading(true);
       const response = await getAllCategories();
       console.log('category', response)
-      setCategory(response.slice(8, 19));
+      setCategory(response);
      
     } catch (error) {
       console.log('Error fetching Category Products', error);
@@ -194,9 +199,9 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
   
 
 
-  const renderFlashDeals = useCallback(() => (
-    <FlashDealsFlatlist products={products} />
-  ), [products]);
+  // const renderFlashDeals = useCallback(() => (
+
+  // ), [products]);
    
   const memoizedOrders = useMemo(() => {
     return orders; // Ensure this is the same reference if the data hasn't changed
@@ -247,8 +252,10 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
             
             </View>
           </View>
-          {renderFlashDeals()}
-          
+          <FlashDealsFlatlist 
+             products={products} 
+             categoryId={currentCategoryId}
+             onCategoryChange={handleCategoryChange} />
         </View>
       )}
       {selectedIndex === 1 && (
@@ -272,18 +279,21 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
       <CustomText
         variant="h5"
         fontFamily={Fonts.SemiBold}
-        style={[styles.textHeader, {marginTop: 10}]}>
+        style={[styles.textHeader, {marginTop: 18}]}>
         Grocery & Kitchen
       </CustomText>
       <CategoryContainer data={categories} />
-      {selectedIndex === 0 && (
+    
         <View>
           <LinearGradient
             colors={['transparent', '#8A59DD', '#21C2F8']}
             style={styles.homeLinearGradient2}></LinearGradient>
-          <ProductFlatlist />
+         <ProductFlatlist 
+        products={products} 
+        categoryId={currentCategoryId}
+        onCategoryChange={handleCategoryChange}
+      />
         </View>
-      )}
       {selectedIndex === 0 && <FlashDealsFlatlist products={products} />}
       {/* <CustomText variant="h5" fontFamily={Fonts.SemiBold}>Snacks & Drinks</CustomText>
       <CategoryContainer data={categories} /> */}
@@ -293,12 +303,12 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
         style={styles.textHeader}>
         Personal Care
       </CustomText>
-      <View style={{marginTop: 40}}>
+      <View style={{marginTop: 1 }}>
         <SubcategoryFlatlist subcategory={subcategory} />
       </View>
-      <View style={{marginTop: 10}}>
+   
         <CategoryFlatlist category={category} />  
-      </View>
+  
  
     
     </View>

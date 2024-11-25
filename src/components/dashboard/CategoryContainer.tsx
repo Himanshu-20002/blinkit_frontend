@@ -40,12 +40,13 @@ const CategoryContainer: FC<{data: any}> = ({data}) => {
     <View style={styles.container}>
       <View style={styles.row}>{renderItems(data?.slice(0, 4))}</View>
       <View style={styles.row}>{renderItems(data?.slice(4, 8))}</View>
-      <View style={styles.row}>{renderItems(data?.slice(8, 10))}</View>
+      <View style={styles.row}>{renderItems(data?.slice(8, 13))}</View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    marginTop:27,
     marginVertical: 15,
     marginHorizontal:10
   },

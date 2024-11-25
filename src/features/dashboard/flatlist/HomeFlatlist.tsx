@@ -124,17 +124,17 @@ const styles = StyleSheet.create({
         // backgroundColor: 'limegreen',
       },
       productImage: {
-        width: 98,
-        height: 98,
+        width: '80%',
+        height: 100,
         borderWidth: 3,
         zIndex: 1000,
         position:'absolute',
         justifyContent:'center',
         alignItems:'center',
-        top:35,
-        left:8,
+        top:30,
+        left:9,
         right:0,
-        bottom:0
+        bottom:5,
       },
       productBackgroundImage: {
         width: '100%',
