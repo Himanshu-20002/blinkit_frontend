@@ -24,6 +24,13 @@ export const adData = [
     require('../assets/products/c4.jpg'),
     require('../assets/products/c5.jpg'),
 ]
+export const adData2 = [
+    require('../assets/products/a1.png'),
+    require('../assets/products/a2.png'),
+    require('../assets/products/a3.png'),
+    require('../assets/products/a4.png'),
+    // require('../assets/products/c5.jpg'),
+]
 
 // export const productsList =
 //     [

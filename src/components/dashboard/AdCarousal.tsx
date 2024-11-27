@@ -5,7 +5,7 @@ import Carousel from 'react-native-reanimated-carousel'
 import { screenWidth } from '../../utils/Scaling'
 import Scalepress from '@components/ui/Scalepress'
 
-const AdCarousal:FC<{adData:any}> = ({adData}) => {
+const AdCarousal:FC<{adData:any,height:number,width:number}> = ({adData ,height,width}) => {
     const progressValue = useSharedValue(0)
     const baseOptions={
         vertical:false,
@@ -25,11 +25,8 @@ const AdCarousal:FC<{adData:any}> = ({adData}) => {
         parallaxScrollingOffset:0,
         parallaxScrollingScale:0.9,
     }}
-    // onProgressChange={(_, absoluteProgress) => {
-    //     progressValue.value = absoluteProgress
-    // }}
     renderItem={({item}:any) => (
-        <Scalepress style={styles.imageContainer}>
+        <Scalepress style={{width ,height}}>
             <Image source={item} style={styles.img}/>
         </Scalepress>
     )}
@@ -40,10 +37,6 @@ const AdCarousal:FC<{adData:any}> = ({adData}) => {
 
 const styles = StyleSheet.create({
     imageContainer:{
-        width:screenWidth,
-        height:screenWidth*0.5,
-        // borderRadius:10,
-        // overflow:'hidden'
         
     },
     img:{

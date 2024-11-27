@@ -16,6 +16,8 @@ import {fetchProduct} from '@services/ProductService';
 import ProductItem from '@features/category/ProductItem';
 import {FlashList} from '@shopify/flash-list';
 import SearchProductList from './products/SearchProductList';
+import AdCarousal from './AdCarousal';
+import { adData2 } from '@utils/dummyData';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -124,7 +126,13 @@ const SearchProducts = () => {
           style={styles.profile}
         />
       </TouchableOpacity>
+      <View  style={{marginHorizontal:10}}>
 
+
+
+      <AdCarousal adData={adData2}height={120} width={440}/>
+      </View >
+      <View style={{flex:1 ,marginTop:100}}>
       <FlashList
         data={filteredProducts}
         renderItem={renderItem}
@@ -133,6 +141,7 @@ const SearchProducts = () => {
         showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}
       />
+      </View>
     </View>
   );
 };
@@ -140,9 +149,10 @@ const SearchProducts = () => {
 const styles = StyleSheet.create({
   flatContainer: {
     flex: 1,
-    backgroundColor: Colors.backgroundSecondary,
+    // backgroundColor: Colors.backgroundSecondary,
     padding: 10,
-    marginBottom: 10, // Added fixed padding to prevent layout shift
+    marginBottom: 10
+     // Added fixed padding to prevent layout shift
   },
   content: {
     paddingHorizontal: 1,

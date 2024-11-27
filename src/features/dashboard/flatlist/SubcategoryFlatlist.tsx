@@ -2,24 +2,35 @@ import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
 import React from 'react';
 import { FlashList } from '@shopify/flash-list';
 import CustomText from '@components/ui/CustomText';
+import { green } from 'react-native-reanimated/lib/typescript/Colors';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 
 const SubcategoryFlatlist = ({subcategory}: {subcategory: any[]}) => {
   return (
     <View style={styles.mainContainer}>
-    <FlatList
+       
+    <FlashList
       data={subcategory}
       horizontal={true}
-      // estimatedItemSize={30}
+      estimatedItemSize={100}
       keyExtractor={(item) => item._id}
+      // numColumns={6}
+      contentContainerStyle={
+        {
+       padding:2,
+       paddingTop:25,
+       paddingVertical:90
+        }      }
       renderItem={({ item }) => (
         <View style={styles.itemContainer}>
+          {/* <View  style={{backgroundColor:'green'}} /> */}
             <View style={styles.imageContainer}>
                <Image source={{ uri: "https://res.cloudinary.com/duyyhs6ef/image/upload/v1732522906/Untitled_design_10_waa7ck.png" }} style={styles.containerImage} />
                <Image source={{ uri: item.image }} style={styles.image} />
           </View>
-          <CustomText style={styles.itemName} numberOfLines={1}>{item.name}</CustomText>
+          <CustomText style={styles.itemName} numberOfLines={1}>{item.name.slice(0,15)}</CustomText>
         </View>
       )}
     />
@@ -28,22 +39,50 @@ const SubcategoryFlatlist = ({subcategory}: {subcategory: any[]}) => {
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    padding: 10,
-    backgroundColor: '#E8E8E8',
-    borderRadius: 3,
+  // homeLinearGradient: {
+  //   height: 150,
+  //   position: 'absolute',
+  //   width: '100%',
+  //   top: 30,
+  //   left: 18,
+  //   right: 18,
+  //   zIndex: 1,
+  //   transform: [{scaleY: -1}, {scaleX: -5}],
+  //   opacity: 0.8,
+  // },
+    mainContainer: {
+    padding: 0,
+    // backgroundColor: '#2961FC',
+    borderRadius: 2,
     marginBottom: 10,
-
+    marginLeft: -19,
+    zIndex: 100,
+    height:189,
+    width: '110%',
+    // alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+    // position:'absolute',
+    // top: 0,
+    // left: 0,
+    // right: 10,
+    // bottom: 0,
+    // backgroundColor: 'green',
     marginTop: 10,
   },
   itemContainer: {
-    backgroundColor: '#CAC9C9C6', // Change to a random color if needed
+     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    margin: 1,
-    padding: 1,
+    gap:0,
+    paddingBottom:10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 120, // Adjust width as needed
+    width: 115,
+    height: 145,
+    marginBottom: 20,
+    marginLeft: 10,
+    // backgroundColor: 'green',
+  
+
   },
   image: {
     width: 100,
@@ -64,7 +103,7 @@ const styles = StyleSheet.create({
     height: 109,
     borderRadius: 10,
     padding:3,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     marginTop:3
   },
   

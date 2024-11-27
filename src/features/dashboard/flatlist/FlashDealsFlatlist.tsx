@@ -12,32 +12,33 @@ import {productsList} from '@utils/dummyData';
 import CustomText from '@components/ui/CustomText';
 import {Fonts} from '@utils/Constants';
 import GreenUniversalAdd from '@components/ui/GreenUniversalAdd';
+import { getProductsByCategoryId } from '@services/ProductService';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 const FULL_WIDTH = screenWidth;
 
 interface FlashListProps {
-  products: any[];
-  categoryId: string;
-  onCategoryChange: (categoryId: string) => void;
 
-  // other props
 }
 const FlashDealsFlatlist: React.FC<FlashListProps> = ({
-  products,
-  categoryId,
-  onCategoryChange,
-}) => {
-  // onCategoryChange('6741c69799ee3a4b31a42a22')
-  const [products1, setProducts] = useState();
 
+}) => {
+  const [products, setProducts] = useState<any[]>([]);
+  
+  const fetchProducts = useCallback(async(categoryId: string)=> {
+    try {
+      const response = await getProductsByCategoryId (categoryId);
+      setProducts((response.slice(0, 8)));
+    } catch (error) {
+      console.log('Error fetching Products', error);
+    }
+  },[]);
   useEffect(() => {
-    setProducts(products);
-    // onCategoryChange('6741c69799ee3a4b31a42a22');
+    fetchProducts("6741c69799ee3a4b31a42a22");
   }, []);
 
+
   const renderItem = ({item, index}: any) => {
-    console.log('rendering item', index);
     return (
       <View>
         <Image

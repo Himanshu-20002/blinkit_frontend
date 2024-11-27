@@ -57,7 +57,7 @@ const ProductDashboard = () => {
   const slideUp = () => {
     RNAnimated.timing(noticePosition, {
       toValue: NOTICE_HEIGHT,
-      duration: 3900,
+      duration: 2500,
       useNativeDriver: false,
     }).start();
   };

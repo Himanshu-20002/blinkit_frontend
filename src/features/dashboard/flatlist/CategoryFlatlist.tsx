@@ -42,7 +42,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 27,
     // marginVertical: 10,
-     padding:1
+     padding:1,
+     flex:1,
+     alignContent:'center',
+     width:'100%',
+     height:400,
+
   },
   row: {
     flexDirection: 'row',
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: '100%',
+    // height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,

@@ -7,7 +7,7 @@ const OrderItem: FC<{item: CartItem}> = ({item}) => {
   return (
     <View style={styles.flexRow}>
       <View style={styles.imageContainer}>
-        <Image source={{uri: item?.item?.image}} style={styles.img} />
+        <Image source={{uri: item?.item?.images[0]}} style={styles.img} />
       </View>
       <View style={{width: '55%'}}>
         <CustomText variant="h7" fontFamily={Fonts.Medium}>

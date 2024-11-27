@@ -33,7 +33,7 @@ const DeliveryDetails:FC<{details:any}> = ({details}) => {
             <Icon name='phone-outline' size={RFValue(20)} color={Colors.disabled} />
         </View>
         <View>
-            <CustomText variant='h8' fontFamily={Fonts.SemiBold}>{details?.name || '------'}{details?.phone || 'XXXXXXXXXX'}</CustomText>
+            <CustomText variant='h8' fontFamily={Fonts.SemiBold}>{details?.name || '------'}       {details?.phone || 'XXXXXXXXXX'}</CustomText>
             <CustomText variant='h8' fontFamily={Fonts.Medium}>Receiver's Contact Number</CustomText>
         </View>
       </View>

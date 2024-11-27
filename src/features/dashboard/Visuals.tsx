@@ -149,7 +149,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
         return {
           lottieContainer: {
             borderRadius: 0,
-            backgroundColor: '#E43F3F', // Ensure the background is visible
+            backgroundColor: '#ECEF32E3',
             padding: 10, // Add padding if needed
             position: 'absolute',
             top: 0,
@@ -187,8 +187,8 @@ const Visuals: FC<VisualsProps> = ({type}) => {
             height: 500,
             position: 'absolute',
             transform: [{scaleX: -1}],
-            top: 9,
-            left: 7,
+            top: -30,
+            left: 0,
             right: 5,
             bottom: 5,
           },
@@ -456,7 +456,7 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     zIndex: -99,
-    opacity:0.8
+    opacity:0.94
   },
   touchableContentContainer: {},
   touchableContainer2: {
