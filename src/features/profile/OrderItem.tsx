@@ -3,6 +3,7 @@ import React, {FC} from 'react';
 import {Colors, Fonts} from '../../utils/Constants';
 import CustomText from '../../components/ui/CustomText';
 import {formatISOToCustom} from '@utils/DateUtils';
+import FastImage from 'react-native-fast-image';
 interface CartItem {
   _id: string | number;
   item: any;
@@ -55,8 +56,8 @@ const OrderItem: FC<{item: OrderItemProps; index: number}> = ({
         <View style={styles.flexRowBetween}>
             <View style={{flexDirection: 'row', gap: 4, marginTop: 10}}>
          {item?.items.map((i, idx) => (
-            <Image
-              source={{uri: i.item.image}}
+            <FastImage
+              source={{uri: i.item.images[0]}}
               style={styles.itemImage}
               key={idx}
             />

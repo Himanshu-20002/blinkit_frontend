@@ -37,7 +37,7 @@ const ListDetail = ({route}: any) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles =  StyleSheet.create({
   bottomSheetContainer: {
     zIndex: 1,
     backgroundColor: '#9B7F7F',
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
     left: 0,
   },
 });
-export default ListDetail;
+export default  ListDetail;

@@ -36,16 +36,26 @@ export const fetchCustomerOrders = async (userId:string) => {
     return null;
   }
 };
-export const fetchCurrentOrdersforDelivery = async (status:string, userId:string, branchId:string) => {
+export const fetchCurrentOrdersforDelivery = async (status:string, userId?:string, branchId:string) => {
+  console.log('Received params:', { status, branchId });
+  if (!status || !branchId) {
+    console.log('Missing required parameters');
+    return null;
+  }
   let uri = status === 'available' 
     ? `/order?status=${status}&branchId=${branchId}` 
     : `/order?status=${status}&branch=${branchId}`
   try {
     const response = await appAxios.get(uri)
+    if (!response || !response.data) {
+      console.log('Invalid response:', response);
+      return null;
+    }
     console.log('fetchCurrentOrdersforDelivery response', response.data);
     return response.data;
-  } catch (error) {
-    console.log('fetching delivery orders error', error);
+  } catch (error: any) {
+    console.log('Requesting URL:', uri);
+    console.log('fetching delivery orders error:', error?.response?.data || error);
     return null;
   }
 };

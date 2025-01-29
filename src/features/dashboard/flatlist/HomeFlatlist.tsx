@@ -6,6 +6,7 @@ import { navigate } from '@utils/NavigationUtils'
 import { Fonts } from '@utils/Constants'
 import LinearGradient from 'react-native-linear-gradient'
 import { BottomSheetRefProps } from '@components/dashboard/BottomSheet'
+import FastImage from 'react-native-fast-image'
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 const FULL_WIDTH = screenWidth;
@@ -42,7 +43,7 @@ const HomeFlatlist = () => {
                       {item.name}
                     </CustomText>
                   </View>
-                  <Image
+                  <FastImage
                     source={{uri: item.image}}
                     resizeMode="cover"
                     style={styles.productImage} 
@@ -114,11 +115,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         width: 118,
         height: 100,
         zIndex: 1000,
-        gap: 10,
+        gap: 0,
         
     
         // backgroundColor: 'limegreen',
@@ -126,13 +127,13 @@ const styles = StyleSheet.create({
       productImage: {
         width: '80%',
         height: 100,
-        borderWidth: 3,
+
         zIndex: 1000,
         position:'absolute',
         justifyContent:'center',
         alignItems:'center',
         top:30,
-        left:9,
+        left:12,
         right:0,
         bottom:5,
       },

@@ -26,10 +26,10 @@ const LiveHeader:FC<{type:'Coustomer'|'Delivery';
                 }
                 navigate('DeliveryDashboard')
             }}>
-                <Icon name='arrow-left' size={RFValue(16)} color={isCustomer? 'black' : 'white'} />
+                <Icon name='arrow-left' size={RFValue(19)} color={isCustomer? 'limegreen' : 'white'} />
             </Pressable>
-            <CustomText style={isCustomer? styles.titleTextBlack : styles.titleTextWhite} variant='h8' fontFamily={Fonts.Medium} numberOfLines={1}>{title}</CustomText>
-            <CustomText style={isCustomer? styles.titleTextBlack : styles.titleTextWhite} variant='h5' fontFamily={Fonts.SemiBold} numberOfLines={1}>{secondaryTitle}</CustomText>
+            <CustomText style={isCustomer? styles.titleTextBlack : styles.titleTextWhite} variant='h8' fontFamily={Fonts.SemiBold} numberOfLines={1}>{title}</CustomText>
+            <CustomText style={isCustomer? styles.titleTextWhite : styles.titleTextWhite} variant='h5' fontFamily={Fonts.SemiBold} numberOfLines={1}>{secondaryTitle}</CustomText>
         </View>
         
     </SafeAreaView>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
     },
     titleTextBlack:{
-        color:'black'
+        color:'limegreen'
     },
     titleTextWhite:{
         color:'white'

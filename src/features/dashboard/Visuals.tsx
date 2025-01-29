@@ -1,8 +1,7 @@
-
 import {Dimensions,} from 'react-native';
 import {View, StyleSheet, Image, ViewStyle} from 'react-native';
 import Animated from 'react-native-reanimated';
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {darkWeatherColors} from '../../utils/Constants';
 import LottieView from 'lottie-react-native';
@@ -11,7 +10,7 @@ import {useCollapsibleContext} from '@r0b0t3d/react-native-collapsible';
 import Video from 'react-native-video';
 import {BlurView} from '@react-native-community/blur';
 import SavedFlatlist from './flatlist/SavedFlatlist';
-
+import FastImage from 'react-native-fast-image';
 
 //implementation of on Refresh Visuals changes including change in all theme and 1 dark mode and loading animation
 // Theme 1: Light Mode
@@ -29,7 +28,7 @@ type VisualsProps = {
   type: string;
 };
 
-const Visuals: FC<VisualsProps> = ({type}) => {
+const Visuals: FC<VisualsProps> = React.memo(({type}) => {
   //When you call const { scrollY } = useCollapsibleContext(); in your Visuals.tsx file, you are destructuring the context object to get the scrollY animated value. This value represents the current vertical scroll position and is updated as the user scrolls.
   const {scrollY} = useCollapsibleContext();
   const headerAnimatedStyle = useAnimatedStyle(() => {
@@ -68,9 +67,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
     };
   });
 
- 
-
-  const animationSource = () => {
+  const animationSource = useMemo(() => {
     switch (type) {
       case 'home':
         return require('../../assets/animations/raining.json');
@@ -87,9 +84,9 @@ const Visuals: FC<VisualsProps> = ({type}) => {
       default:
         return require('../../assets/animations/expAnimation/1.json');
     }
-  };
-  // Function to determine dynamic styles based on type
-  const dynamicStyles = (): {lottieContainer: ViewStyle; lottie: ViewStyle} => {
+  }, [type]);
+
+  const dynamicStyles = useMemo(() => {
     switch (type) {
       case 'home':
         return {
@@ -149,7 +146,7 @@ const Visuals: FC<VisualsProps> = ({type}) => {
         return {
           lottieContainer: {
             borderRadius: 0,
-            backgroundColor: '#ECEF32E3',
+            backgroundColor: '#FF0335C3',
             padding: 10, // Add padding if needed
             position: 'absolute',
             top: 0,
@@ -225,16 +222,16 @@ const Visuals: FC<VisualsProps> = ({type}) => {
           lottie: {height: 150},
         };
     }
-  };
+  }, [type]);
 
-  const DynamicStyles = dynamicStyles();
+  const DynamicStyles = dynamicStyles;
 
 
   // headerAnimatedStyle
   return (
     <Animated.View style={[styles.container, headerAnimatedStyle]}>
       <LinearGradient colors={darkWeatherColors} style={styles.gradient} />
-      <Image
+      <FastImage
         source={require('../../assets/images/cloud.png')}
         style={styles.cloud}
       />
@@ -264,13 +261,13 @@ const Visuals: FC<VisualsProps> = ({type}) => {
           />
         </View>
       )}
-      <View style={[DynamicStyles.lottieContainer ,]}>
+      <View style={DynamicStyles.lottieContainer}>
         <View style={styles.lottieWrapper}>
           <LottieView
             autoPlay={true}
             enableMergePathsAndroidForKitKatAndAbove={true}
             loop={true}
-            source={animationSource()}
+            source={animationSource}
             style={[DynamicStyles.lottie as ViewStyle]} // Adjust height as needed
           />
           {type === 'saved' && (
@@ -315,69 +312,69 @@ const Visuals: FC<VisualsProps> = ({type}) => {
             </Animated.View>
           )}
 
-          {type === 'saved' && (
-            <SavedFlatlist selectedIndex={1}/>
-          )}
-          {type === 'saved' && (
-            <Image
-              source={require('../../assets/images/yellowDecoration.jpg')}
-              style={styles.saveGhost}
-            />
-          )}
-          {type === 'food' && (
-            <Image
-              source={require('../../assets/images/textBackground.png')}
-              style={styles.foodBanner}
-            />
-          )}
-          {type === 'food' && (
-            <Image
-              source={require('../../assets/images/Pizza.png')}
-              style={styles.pizza}
-            />
-          )}
-          {type === 'food' && (
-            <Image
-              source={require('../../assets/images/cheese-burger.png')}
-              style={styles.burger}
-            />
-          )}
-          {type === 'food' && (
-            <Image
-              source={require('../../assets/images/topbar3.png')}
-              style={styles.tasteOfItalia}
-            />
-          )}
-          {type === 'food' && (
-            <Image
-              source={require('../../assets/images/dish.png')}
-              style={styles.dish}
-            />
-          )}
-             {type === 'food' && (
-            <LinearGradient
-              colors={['transparent', 'rgb(194 38 38)', 'lightpink']} // Adjust colors for fade effect
-              style={styles.lottieBottomFadeFood}
-            />
-          )}
-             {type === 'food' && (
-            <LinearGradient
-              colors={['transparent', 'rgb(194 38 38)', 'lightpink']} // Adjust colors for fade effect
-              style={styles.lottieTopFadeFood}
-            />
-          )}
-          {type === 'home' && (
-            <Image
-              source={require('../../assets/images/2.jpg')}
-              style={styles.homeGhost}
-            />
-          )}
+        {type === 'saved' && (
+          <SavedFlatlist selectedIndex={1}/>
+        )}
+        {type === 'saved' && (
+            <FastImage
+            source={require('../../assets/images/yellowDecoration.jpg')}
+            style={styles.saveGhost}
+          />
+        )}
+        {type === 'food' && (
+          <FastImage
+            source={require('../../assets/images/textBackground.png')}
+            style={styles.foodBanner}
+          />
+        )}
+        {type === 'food' && (
+          <FastImage
+            source={require('../../assets/images/Pizza.png')}
+            style={styles.pizza}
+          />
+        )}
+        {type === 'food' && (
+          <FastImage
+            source={require('../../assets/images/cheese-burger.png')}
+            style={styles.burger}
+          />
+        )}
+        {type === 'food' && (
+          <FastImage
+            source={require('../../assets/images/topbar3.png')}
+            style={styles.tasteOfItalia}
+          />
+        )}
+        {type === 'food' && (
+          <FastImage
+            source={require('../../assets/images/dish.png')}
+            style={styles.dish}
+          />
+        )}
+           {type === 'food' && (
+          <LinearGradient
+            colors={['transparent', 'rgb(194 38 38)', 'lightpink']} // Adjust colors for fade effect
+            style={styles.lottieBottomFadeFood}
+          />
+        )}
+           {type === 'food' && (
+          <LinearGradient
+            colors={['transparent', 'rgb(194 38 38)', 'lightpink']} // Adjust colors for fade effect
+            style={styles.lottieTopFadeFood}
+          />
+        )}
+        {type === 'home' && (
+          <FastImage
+            source={require('../../assets/images/2.jpg')}
+            style={styles.homeGhost}
+          />
+        )}
 
-        </View>
+      </View>
       </View>
     </Animated.View>
   );
-};
+});
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',

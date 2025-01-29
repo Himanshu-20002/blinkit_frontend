@@ -9,7 +9,7 @@ import LottieView from 'lottie-react-native';
 import CustomInput from '@components/ui/CustomInput';
 import CustomText from '@components/ui/CustomText';
 import { Fonts } from '../../utils/Constants';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import CustomButton from '@components/ui/CustomButton';
 const DeliveryLogin:FC = () => {
@@ -46,7 +46,7 @@ const DeliveryLogin:FC = () => {
      value={email}
      onChangeText={(text) => setEmail(text)}
      placeholder='Email'
-     left={<Icon name='mail-outline' size={20} color='#F8890E' style={{marginLeft:10}} size={RFValue(18)}/>}
+     left={<Icon name='email-outline' size={20} color='#F8890E' style={{marginLeft:10}} size={RFValue(18)}/>}
      inputMode='email'
      right={false}
      />

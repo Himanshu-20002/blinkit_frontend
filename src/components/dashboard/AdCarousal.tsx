@@ -10,10 +10,10 @@ const AdCarousal:FC<{adData:any,height:number,width:number}> = ({adData ,height,
     const baseOptions={
         vertical:false,
         width:screenWidth,
-        height:screenWidth*0.5,
+        height:screenWidth*0.49,
     }
   return (
-    <View style={{left:-25,marginVertical:20,}}>  
+    <View style={{left:-25,}}>  
     <Carousel {...baseOptions}
     loop
     pagingEnabled

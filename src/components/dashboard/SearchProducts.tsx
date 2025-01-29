@@ -18,6 +18,7 @@ import {FlashList} from '@shopify/flash-list';
 import SearchProductList from './products/SearchProductList';
 import AdCarousal from './AdCarousal';
 import { adData2 } from '@utils/dummyData';
+import WithCart from '@features/cart/WithCart';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -146,6 +147,8 @@ const SearchProducts = () => {
   );
 };
 
+
+
 const styles = StyleSheet.create({
   flatContainer: {
     flex: 1,
@@ -204,4 +207,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
-export default SearchProducts;
+export default WithCart(SearchProducts);

@@ -53,11 +53,11 @@ useEffect(() => {
     time = 'Enjoy your meal';
   }
 
-  console.log('currentOrder.customer', currentOrder?.customer);
+
 
   return (
     <View style={styles.container}>
-      <LiveHeader type="Customer" title={msg} secondaryTitle={time} />
+      <LiveHeader type="Coustomer" title={msg} secondaryTitle={time} />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
@@ -74,7 +74,7 @@ useEffect(() => {
       
         </View>
         <DeliveryDetails details={currentOrder?.customer}/>
-        <OrderSummary  order={currentOrder}/>
+        {currentOrder && <OrderSummary  order={currentOrder}/>}
       </ScrollView>
     </View>
   );

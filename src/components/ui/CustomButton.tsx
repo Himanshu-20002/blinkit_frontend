@@ -10,10 +10,11 @@ interface CustomButtonProps {
     onPress: ()=>void;
     disabled?: boolean;
     loading?: boolean;
+    backgroundColor?: string;
 }
-const CustomButton: FC<CustomButtonProps> = ({title, onPress, disabled, loading}) => {
+const CustomButton: FC<CustomButtonProps> = ({title, onPress, disabled, loading,  backgroundColor,}) => {
     return (
-     <TouchableOpacity onPress={onPress} disabled={disabled} style={[styles.btn,{backgroundColor: disabled ? Colors.disabled : Colors.secondary}]} activeOpacity={0.8} >
+     <TouchableOpacity onPress={onPress} disabled={disabled} style={[styles.btn,{backgroundColor: disabled ? Colors.disabled  : backgroundColor || Colors.secondary}]} activeOpacity={0.8} >
         {loading ? <ActivityIndicator color="white" size="small"/> : <CustomText variant='h6' fontFamily={Fonts.SemiBold} style={styles.text} numberOfLines={1}>{title}</CustomText>}
      </TouchableOpacity>
     )

@@ -7,7 +7,8 @@ import { RFValue } from 'react-native-responsive-fontsize'
 import CustomText from '../../components/ui/CustomText'
 
 
-const DeliveryDetails:FC<{details:any}> = ({details}) => {
+const DeliveryDetails:FC<{details:any ,location:any}> = ({details,location}) => {
+  console.log(location)
   return (
     <View style={styles.container}>
       <View style={styles.flexRow}>
@@ -35,6 +36,15 @@ const DeliveryDetails:FC<{details:any}> = ({details}) => {
         <View>
             <CustomText variant='h8' fontFamily={Fonts.SemiBold}>{details?.name || '------'}       {details?.phone || 'XXXXXXXXXX'}</CustomText>
             <CustomText variant='h8' fontFamily={Fonts.Medium}>Receiver's Contact Number</CustomText>
+        </View>
+      </View>
+      <View style={styles.flexRow2}>
+        <View style={styles.iconContainer}>
+            <Icon name='chess-bishop' size={RFValue(20)} color={Colors.disabled} />
+        </View>
+        <View>
+            <CustomText variant='h8' fontFamily={Fonts.SemiBold}>{location?.latitude},{location?.longitude}</CustomText>
+            <CustomText variant='h8' fontFamily={Fonts.Medium}>{location?.address}</CustomText>
         </View>
       </View>
 

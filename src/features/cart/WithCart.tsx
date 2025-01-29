@@ -28,6 +28,7 @@ const WithCart = <P extends object>(WrappedComponent: React.ComponentType<P>): F
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    zIndex:9999
   },
 });
 

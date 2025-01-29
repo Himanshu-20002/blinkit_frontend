@@ -17,7 +17,6 @@ import {fetchCustomerOrders} from '@services/OrderService';
 import {
   getAllCategories,
   getProductsByCategoryId,
-  getProductsBySubcategoryId,
   getSubcategory,
 } from '@services/ProductService';
 import CountDownTimer from './CountDownTimer';
@@ -25,12 +24,12 @@ import SubcategoryFlatlist from '@features/dashboard/flatlist/SubcategoryFlatlis
 import CategoryFlatlist from '@features/dashboard/flatlist/CategoryFlatlist';
 import LottieView from 'lottie-react-native';
 
-const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
+const ContentContainer = React.memo(({selectedIndex}: {selectedIndex: number}) => {
   console.log('rendering content container');
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: 18,
-      marginTop: selectedIndex === 0 ? 10 : 270,
+      marginTop: selectedIndex === 0 ? -10 : 247,
       flex: 1,
     },
     linearGradient: {
@@ -141,7 +140,7 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
       position: 'absolute',
       width: 800,
       top: 350,
-      left: 0,
+      left: -20,
       right: 0,
       zIndex: 1,
       opacity: 1,
@@ -190,10 +189,15 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
   const [products, setProducts] = useState<any[]>([]);
   const [productsLoading, setProductsLoading] = useState(false);
   const [currentCategoryId, setCurrentCategoryId] = useState('');
+  const [subcategory, setSubcategory] = useState<any[]>([]);
+  const [category, setCategory] = useState<any[]>([]);
+  const {user} = useAuthStore();
+  const [orders, setOrders] = useState<any[]>([]);
 
   const fetchProducts = useCallback(async (categoryId: string) => {
+    if (!categoryId) return; // Prevent fetching if no categoryId
+    setProductsLoading(true);
     try {
-      setProductsLoading(true);
       const response = await getProductsByCategoryId(categoryId);
       setProducts(response.slice(0, 8));
     } catch (error) {
@@ -202,224 +206,149 @@ const ContentContainer = ({selectedIndex}: {selectedIndex: number}) => {
       setProductsLoading(false);
     }
   }, []);
+
   useEffect(() => {
     fetchProducts(currentCategoryId);
   }, [currentCategoryId, fetchProducts]);
 
-  const handleCategoryChange = useCallback((newCategoryId: string) => {
-    setCurrentCategoryId(newCategoryId);
-  }, []);
-
-  const [subcategory, setSubcategory] = useState<any[]>([]);
-  // const [subcategoryProductsLoading, setSubcategoryProductsLoading] = useState(false);
-
-  const fetchSubcategory = async () => {
+  const fetchSubcategory = useCallback(async () => {
     try {
-      // setSubcategoryProductsLoading(true);
       const response = await getSubcategory();
       setSubcategory(response.slice(3, 20));
     } catch (error) {
       console.log('Error fetching Subcategory Products', error);
     }
-  };
-  useEffect(() => {
-    fetchSubcategory();
-    console.log('DATA FETCHED ', selectedIndex);
-    fetchOrders();
-  }, [selectedIndex]);
+  }, []);
 
-  // const formatTime = (seconds: number) => {
-  //   const minutes = Math.floor(seconds / 60);
-  //   const secs = seconds % 60;
-  //   return `${minutes}:${secs < 10 ? '0' : ''}${secs}`; // Format as MM:SS
-  // };
-  const [category, setCategory] = useState<any[]>([]);
-  // const [subcategoryProductsLoading, setSubcategoryProductsLoading] = useState(false);
-
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
     try {
-      // setSubcategoryProductsLoading(true);
       const response = await getAllCategories();
-      console.log('category', response);
       setCategory(response);
     } catch (error) {
       console.log('Error fetching Category Products', error);
     }
-  };
-  useEffect(() => {
-    fetchCategory();
-    console.log('DATA FETCHED ', selectedIndex);
-    fetchOrders();
-  }, [selectedIndex]);
+  }, []);
 
-  const {user} = useAuthStore();
-  const [orders, setOrders] = useState<any[]>([]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     const data = await fetchCustomerOrders(user?.id);
     if (data?.orders) {
       const sortedOrders = data.orders.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       );
-      setOrders(sortedOrders.slice(0, 4)); // Get the first 5 orders
+      setOrders(sortedOrders.slice(0, 4)); // Get the first 4 orders
     }
-  };
+  }, [user]);
 
-  // const renderFlashDeals = useCallback(() => (
+  useEffect(() => {
+    fetchSubcategory();
+    fetchCategory();
+    fetchOrders();
+  }, [selectedIndex, fetchSubcategory, fetchCategory, fetchOrders]);
 
-  // ), [products]);
-
-  const memoizedOrders = useMemo(() => {
-    return orders; // Ensure this is the same reference if the data hasn't changed
-  }, [orders]); // Add dependencies as needed
-
-  const renderPreviousFlatlist = useCallback(
-    () => <PreviousFlatlist orders={memoizedOrders} />,
-    [memoizedOrders],
-  );
+  const renderPreviousFlatlist = useCallback(() => <PreviousFlatlist orders={orders} />, [orders]);
   const renderCountDownTimer = useCallback(() => <CountDownTimer />, []);
 
   return (
-    <>
-      {/* <View style={{position:'absolute', top:0, left:0, right:0, zIndex:111111111}}>
-    <SavedFlatlist selectedIndex={selectedIndex}/>
-    </View> */}
-      <View style={styles.container}>
-        {selectedIndex === 0 && (
-          <View style={{paddingBottom: 10}}>
-            <AdCarousal adData={adData} />
-            <HomeFlatlist />
+    <View style={styles.container}>
+      {selectedIndex === 0 && (
+        <View style={{paddingBottom: 10}}>
+          <AdCarousal adData={adData} />
+          <HomeFlatlist />
+          <LinearGradient
+            colors={['transparent', '#891DF5', 'hsl(268 88.24% 60%)']}
+            style={styles.homeLinearBorderCover}
+          />
+          <LinearGradient
+            colors={['transparent', '#891DF5', 'hsl(58.08 100% 50.98%)']}
+            style={styles.homeLinearBorder}
+          />
             <LinearGradient
-              colors={['transparent', '#891DF5', 'hsl(268 88.24% 60%)']}
-              style={styles.homeLinearBorderCover}></LinearGradient>
-            <LinearGradient
-              colors={['transparent', '#891DF5', 'hsl(58.08 100% 50.98%)']}
-              style={styles.homeLinearBorder}></LinearGradient>
-          </View>
-        )}
-        {selectedIndex === 1 && (
-          <View style={{marginTop: 1}}>
-            <LinearGradient
-              colors={['transparent', '#8A59DD', '#21C2F8']}
-              style={styles.linearGradient}></LinearGradient>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <CustomText
-                variant="h5"
-                fontFamily={Fonts.SemiBold}
-                style={styles.flashDealsText}>
-                Flash Deals
-              </CustomText>
-              <View
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  backgroundColor: '#4967FB',
-                  borderRadius: 4,
-                  zIndex: 1000,
-                  paddingHorizontal: 4,
-                }}>
-                {renderCountDownTimer()}
-              </View>
-            </View>
-            <FlashDealsFlatlist />
-          </View>
-        )}
-        {selectedIndex === 1 && (
-          <View style={{marginTop: 5}}>
-            {/* <LinearGradient colors={['transparent', '#D0BAF6','rgb(57 228 23)']} style={styles.linearGradient}></LinearGradient> */}
-            <CustomText
-              variant="h5"
-              fontFamily={Fonts.SemiBold}
-              style={styles.textHeader}>
-              Previouly bought
+          colors={['#ffffff', '#FFFFFF', 'transparent']}
+          style={styles.groceryLinearGradient}></LinearGradient>
+        </View>
+      )}
+      {selectedIndex === 1 && (
+        <View style={{marginTop: 1}}>
+          <LinearGradient
+            colors={['transparent', '#8A59DD', '#21C2F8']}
+            style={styles.linearGradient}
+          />
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <CustomText variant="h5" fontFamily={Fonts.SemiBold} style={styles.flashDealsText}>
+              Flash Deals
             </CustomText>
-            {renderPreviousFlatlist()}
+            <View style={{position: 'absolute', right: 0, backgroundColor: '#4967FB', borderRadius: 4, zIndex: 1000, paddingHorizontal: 4}}>
+              {renderCountDownTimer()}
+            </View>
           </View>
-        )}
-
-        {selectedIndex === 0 && (
-          <LinearGradient
-            colors={['#ffffff', '#FFFFFF', 'transparent']}
-            style={styles.groceryLinearGradient}></LinearGradient>
-        )}
-        {selectedIndex === 2 && (
-          <View style={{paddingBottom: 10}}>
-            <HomeFlatlist />
-            {/* <LinearGradient
-              colors={['transparent', '#891DF5', 'hsl(268 88.24% 60%)']}
-              style={styles.homeLinearBorderCover2}></LinearGradient> */}
-            <LinearGradient
-              colors={['transparent', '#891DF5', 'hsl(58.08 100% 50.98%)']}
-              style={styles.homeLinearBorder2}></LinearGradient>
-          </View>
-        )}
-        <CustomText
-          variant="h5"
-          fontFamily={Fonts.SemiBold}
-          style={[styles.textHeader, {marginTop: 18}]}>
-          Grocery & Kitchen
-        </CustomText>
-        <CategoryContainer data={categories} />
-
-        <View style={{marginBottom: 13}}>
-          <LinearGradient
-            colors={['transparent', '#8A59DD', '#0267FF']}
-            style={styles.homeLinearGradient2}></LinearGradient>
-          <CountDownTimer />
-          <CustomText
-            variant="h5"
-            fontFamily={Fonts.SemiBold}
-            style={styles.textHeader}>
-            Flash Deal !
-          </CustomText>
-          <Animated.View>
-            <LottieView
-              autoPlay={true}
-              enableMergePathsAndroidForKitKatAndAbove={true}
-              loop={true}
-              source={require('../../assets/animations/lastAnimation/airBallon.json')}
-              style={styles.lottie}
-            />
-          </Animated.View>
           <FlashDealsFlatlist />
-        </View>
-        <ProductFlatlist
-          products={products}
-          categoryId={currentCategoryId}
-          onCategoryChange={handleCategoryChange}
-        />
-        {selectedIndex === 0 && (
-          <>
-            <ProductFlatlist
-              products={products}
-              categoryId={currentCategoryId}
-              onCategoryChange={handleCategoryChange}
-            />
-          </>
-        )}
-        {/* <CustomText variant="h5" fontFamily={Fonts.SemiBold}>Snacks & Drinks</CustomText>
-      <CategoryContainer data={categories} /> */}
-        <View style={{marginTop: 60  ,flex:1}}>
-          <CustomText
-            variant="h5"
-            fontFamily={Fonts.SemiBold}
-            style={styles.textHeader2}>
-            -Subcategory-
+          <CustomText variant="h5" fontFamily={Fonts.SemiBold} style={styles.textHeader}>
+            Previously bought
           </CustomText>
-
-          <LinearGradient
-            colors={['transparent', '#E4E2E6', 'hsl(268.09 100% 56.86%)']}
-            style={styles.homeLinearGradient3}></LinearGradient>
-          <SubcategoryFlatlist subcategory={subcategory} />
-          <CategoryFlatlist category={category} />
-          <AdCarousal adData={adData2} height={120} width={440} />
+          {renderPreviousFlatlist()}
         </View>
-        {/* </View> */}
+      )}
+      {selectedIndex === 2 && (
+        <View style={{paddingBottom: 10}}>
+          <HomeFlatlist />
+          <LinearGradient
+            colors={['transparent', '#891DF5', 'hsl(58.08 100% 50.98%)']}
+            style={styles.homeLinearBorder2}
+          />
+        </View>
+      )}
+      <CustomText variant="h5" fontFamily={Fonts.SemiBold} style={[styles.textHeader, {marginTop: 18}]}>
+        Grocery & Kitchen
+      </CustomText>
+      <CategoryContainer data={categories} />
+      <View style={{marginBottom: 13}}>
+        <LinearGradient
+          colors={['transparent', '#8A59DD', '#0267FF']}
+          style={styles.homeLinearGradient2}
+        />
+        <CountDownTimer />
+        <CustomText variant="h5" fontFamily={Fonts.SemiBold} style={styles.textHeader}>
+          Flash Deal !
+        </CustomText>
+        <Animated.View>
+          <LottieView
+            autoPlay={true}
+            enableMergePathsAndroidForKitKatAndAbove={true}
+            loop={true}
+            source={require('../../assets/animations/lastAnimation/airBallon.json')}
+            style={styles.lottie}
+          />
+        </Animated.View>
+        <FlashDealsFlatlist />
       </View>
-    </>
+      {selectedIndex === 0 &&   <ProductFlatlist
+        products={products}
+        categoryId={currentCategoryId}
+        onCategoryChange={setCurrentCategoryId}
+      />}
+
+
+      {/* <ProductFlatlist
+        products={products}
+        categoryId={currentCategoryId}
+        onCategoryChange={setCurrentCategoryId}
+      /> */}
+
+      
+      <View style={{marginTop: 60, flex: 1}}>
+        <CustomText variant="h5" fontFamily={Fonts.SemiBold} style={styles.textHeader2}>
+          -Subcategory-
+        </CustomText>
+        <LinearGradient
+          colors={['transparent', '#E4E2E6', 'hsl(268.09 100% 56.86%)']}
+          style={styles.homeLinearGradient3}
+        />
+        <SubcategoryFlatlist subcategory={subcategory} />
+        <CategoryFlatlist category={category} />
+        <AdCarousal adData={adData2} height={120} width={440} />
+      </View>
+    </View>
   );
-};
+});
 
 export default ContentContainer;
